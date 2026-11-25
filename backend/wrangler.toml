@@ -1,0 +1,10 @@
+name = "genicare-ai"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+FIREBASE_PROJECT_ID = "genicare"
+# Model Gemini yang tersedia gratis bisa berubah. Cek di aistudio.google.com lalu ganti di sini bila perlu.
+# MODEL = "gemini-3.1-flash-lite"
+
+ALLOWED_ORIGINS = "https://localhost,http://localhost:3000,http://192.168.249.1:3000"

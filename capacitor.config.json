@@ -1,0 +1,6 @@
+{
+  "appId": "edukasi.genicare",
+  "appName": "GeniCare",
+  "webDir": "www",
+  "server": { "androidScheme": "https" }
+}

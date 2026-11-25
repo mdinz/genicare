@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f6f68">
+<title>GeniCare</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="splash">
+  <div class="drop"><i></i></div>
+  <h1>GeniCare</h1>
+  <p>Kenali, pantau, jaga kesehatan genitourinary</p>
+  <div class="bar"><i></i></div>
+</div>
+
+<div id="auth" hidden>
+  <div class="ab">
+    <h1>GeniCare</h1>
+    <p class="sub" id="aSub"></p>
+    <p class="note" id="demoBan"></p>
+    <form class="card" id="af" novalidate>
+      <div id="fNama"><label class="f" for="nama">Nama</label><input id="nama" autocomplete="name"></div>
+      <label class="f" for="em">Email</label><input id="em" type="email" inputmode="email" autocomplete="email" autocapitalize="off">
+      <div id="fPw"><label class="f" for="pw">Kata sandi</label>
+        <div class="pw"><input id="pw" type="password" autocomplete="current-password"><button type="button" class="eye" data-act="eye" data-target="pw" aria-label="Tampilkan kata sandi" aria-pressed="false"></button></div></div>
+      <div id="fPw2"><label class="f" for="pw2">Ulangi kata sandi</label>
+        <div class="pw"><input id="pw2" type="password" autocomplete="new-password"><button type="button" class="eye" data-act="eye" data-target="pw2" aria-label="Tampilkan kata sandi" aria-pressed="false"></button></div></div>
+      <p id="err" role="alert"></p>
+      <button class="btn" id="aBtn" type="submit" style="width:100%"></button>
+      <div class="btns" style="justify-content:space-between"><button type="button" class="lnk" id="lnkLupa" data-act="mode" data-arg="lupa">Lupa kata sandi?</button><button type="button" class="lnk" id="lnkA"></button></div>
+    </form>
+  </div>
+</div>
+
+<main>
+<section id="beranda" class="tab on">
+  <div class="hero">
+    <p id="sapa">Selamat datang</p>
+    <b>Jaga kesehatanmu hari ini.</b>
+  </div>
+  <div class="row">
+    <div class="card"><div class="big" id="hAir">0 ml</div><div class="sub">Air diminum hari ini</div></div>
+    <div class="card"><div class="big" id="hKemih">0 kali</div><div class="sub">Catatan berkemih</div></div>
+  </div>
+  <div class="card">
+    <h3>Pengingat minum</h3>
+    <div class="row"><select id="remInt"><option value="0">Mati</option><option value="1">Tiap 1 jam</option><option value="2">Tiap 2 jam</option><option value="3">Tiap 3 jam</option></select></div>
+    <p class="note">Aktif selama aplikasi terbuka. Di versi APK, ganti dengan notifikasi terjadwal (lihat panduan).</p>
+  </div>
+  <div class="card">
+    <h3>Ringkasan 7 hari</h3>
+    <div id="mingguan"></div>
+    <div class="btns"><button class="btn o" data-act="download">Unduh ringkasan</button></div>
+  </div>
+  <div class="card"><h3>Akun</h3><p class="sub" id="akun"></p><div class="btns"><button class="btn o" data-act="logout">Keluar</button></div></div>
+</section>
+
+<section id="catatan" class="tab">
+  <h2>Catatan</h2>
+  <div class="card">
+    <h3>Catat minum</h3>
+    <div class="btns" id="quick"></div>
+    <div class="row" style="margin-top:10px"><input type="number" id="ml" placeholder="ml, mis. 250" min="1"><button class="btn" style="flex:0 0 auto" data-act="waterCustom">Simpan</button></div>
+    <p class="note">Target (ml/hari)</p><input type="number" id="target" min="500" step="100">
+    <p class="note">Jika dokter membatasi cairanmu, ikuti anjuran dokter dan ubah target ini.</p>
+  </div>
+  <div class="card">
+    <h3>Catat berkemih</h3>
+    <p class="note">Warna urine</p>
+    <div class="sw" id="warna"></div>
+    <p class="note">Keluhan</p>
+    <label class="ck"><input type="checkbox" class="kl" value="nyeri/panas"> Nyeri atau panas saat berkemih</label>
+    <label class="ck"><input type="checkbox" class="kl" value="berbusa"> Urine berbusa</label>
+    <label class="ck"><input type="checkbox" class="kl" value="bangun malam"> Bangun malam untuk berkemih</label>
+    <div class="btns"><button class="btn" data-act="urine">Simpan catatan</button></div>
+  </div>
+  <div class="card"><h3>Riwayat hari ini</h3><div id="riwayat"></div></div>
+</section>
+
+<section id="edukasi" class="tab">
+  <h2>Edukasi</h2>
+  <p class="sub">Pilih cara belajarmu. Informasi umum, bukan pengganti pemeriksaan dokter.</p>
+  <div class="seg" id="eduSeg">
+    <button data-act="eduMode" data-arg="video" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>Video animasi</button>
+    <button data-act="eduMode" data-arg="artikel" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/></svg>Artikel</button>
+    <button data-act="eduMode" data-arg="kuis" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 116 0c0 2-3 2-3 4M12 17h.01"/></svg>Kuis</button>
+  </div>
+  <div id="eduBody"></div>
+</section>
+
+<section id="keluhan" class="tab">
+  <h2>Cek keluhan</h2>
+  <p class="sub">Pilih keluhan yang kamu alami. Hasilnya hanya saran tingkat urgensi, bukan diagnosis.</p>
+  <div class="card" id="gejala"></div>
+  <div class="btns"><button class="btn" data-act="check">Lihat saran</button></div>
+  <div class="card" id="hasil" style="display:none;margin-top:12px"></div>
+</section>
+
+<section id="ai" class="tab">
+  <h2>Tanya GeniCare</h2>
+  <p class="sub">Asisten AI untuk pertanyaan seputar ginjal dan saluran kemih.</p>
+  <div id="chat"></div>
+  <div class="row" style="margin-top:8px"><textarea id="q" rows="1" placeholder="Tulis pertanyaanmu"></textarea><button class="btn" style="flex:0 0 auto" id="kirim" data-act="ask">Kirim</button></div>
+  <p class="note">Asisten tidak mendiagnosis dan tidak menyarankan obat. Untuk kondisi gawat, segera ke fasilitas kesehatan.</p>
+</section>
+</main>
+
+<nav id="nav"></nav>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
