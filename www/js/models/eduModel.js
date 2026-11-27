@@ -1,81 +1,81 @@
-// Data edukasi GeniCare: Video animasi gaya TikTok & 8 Materi Utama Kesehatan Genitourinary (tanpa materi menstruasi).
+// Data edukasi GeniCare: Video animasi storytelling "Tahukah Kamu?" (Raka & Dr. Hana) & 8 Materi Utama (tanpa materi menstruasi).
 export const VIDEOS = [
   {
     id: 'ginjal',
-    title: 'Perjalanan Urine: Cara Kerja Ginjal',
-    desc: 'Dari penyaringan darah sampai keluar dari tubuh',
-    tag: 'ANATOMI',
+    title: 'Tahukah Kamu? Rahasia Kerja Ginjal',
+    desc: 'Ikuti kisah Raka & Dr. Hana melihat perjalanan urine di tubuh',
+    tag: 'TAHUKAH KAMU?',
     src: '',
     scenes: [
-      { art: 'anatomy', hl: 'kidney', badge: 'TAHAP 1 · GINJAL', headline: '2 Filter Ajaib di Tubuhmu', text: 'Kamu punya dua **ginjal** seukuran kepalan tangan di punggung bawah, kiri dan kanan tulang belakang.' },
-      { art: 'anatomy', hl: 'filter', badge: 'TAHAP 2 · PENYARINGAN', headline: 'Saring 180 Liter Darah/Hari', text: 'Darah terus mengalir ke ginjal. Ginjal menyaring **limbah & kelebihan air**, lalu mengembalikan zat penting ke darah.' },
-      { art: 'anatomy', hl: 'ureter', badge: 'TAHAP 3 · URETER', headline: 'Mengalir Lewat 2 Saluran Tipis', text: 'Hasil saringan menjadi **urine**, lalu turun lewat dua saluran tipis bernama **ureter** menuju kandung kemih.' },
-      { art: 'anatomy', hl: 'bladder', badge: 'TAHAP 4 · KANDUNG KEMIH', headline: 'Tampung & Keluarkan', text: 'Kandung kemih menampung urine. Saat penuh muncul sinyal ingin berkemih, lalu keluar lewat **uretra**.' }
+      { art: 'anatomy', hl: 'kidney', badge: 'TAHUKAH KAMU?', headline: 'Raka Bertanya: Ginjal Kerja Nonstop?', text: '**Dr. Hana:** "Tahukah kamu, Raka? Dua ginjalmu menyaring **180 liter darah** setiap hari tanpa pernah berhenti!"' },
+      { art: 'anatomy', hl: 'filter', badge: 'PROSES PENYARINGAN', headline: 'Saring Limbah, Simpan Zat Baik', text: '**Dr. Hana:** "Limbah dan kelebihan air disaring di ginjal, sedangkan nutrisi penting dikembalikan ke darah."' },
+      { art: 'anatomy', hl: 'ureter', badge: 'PERJALANAN URINE', headline: 'Turun Lewat 2 Saluran Tipis', text: '**Raka:** "Lalu hasil saringannya ke mana, Dok?" **Dr. Hana:** "Mengalir lewat dua saluran bernama **ureter**."' },
+      { art: 'anatomy', hl: 'bladder', badge: 'KESIMPULAN', headline: 'Ditampung Kandung Kemih', text: '**Dr. Hana:** "Saat kandung kemih penuh, tubuh memberi sinyal ingin berkemih agar urine keluar lewat **uretra**."' }
     ]
   },
   {
     id: 'warna',
-    title: 'Kenali Warna Urine & Hidrasi',
-    desc: 'Petunjuk cepat kondisi cairan tubuh dari warna urinemu',
-    tag: 'HIDRASI',
+    title: 'Tahukah Kamu? Arti Warna Urinemu',
+    desc: 'Raka mengecek warna urine dan belajar tanda dehidrasi',
+    tag: 'TAHUKAH KAMU?',
     src: '',
     scenes: [
-      { art: 'colors', hl: [], badge: 'URINE COLOR GUIDE', headline: 'Cek Warna Urinemu Tiap Hari', text: 'Warna urine bisa menjadi **indikator sederhana** untuk melihat apakah tubuhmu cukup cairan.' },
-      { art: 'colors', hl: [0, 1], badge: 'SKALA 1–2 · OPTIMAL', headline: 'Kuning Pucat = Hidrasi Cukup', text: '**Kuning pucat jernih** menandakan cairan tubuhmu tercukupi. Pertahankan kebiasaan minum teratur.' },
-      { art: 'colors', hl: [3, 4], badge: 'SKALA 4–5 · KURANG MINUM', headline: 'Kuning Pekat = Waktunya Minum', text: 'Warna **kuning pekat hingga oranye** berarti urine lebih terkonsentrasi. Segera tambah minum air putih.' },
-      { art: 'colors', hl: [5], badge: 'SKALA 6 · WASPADA', headline: 'Merah / Cokelat? Periksa!', text: 'Urine **merah, kecokelatan, atau keruh** bisa disebabkan darah, obat, atau infeksi. Bila berulang, segera periksa.' }
+      { art: 'colors', hl: [], badge: 'TAHUKAH KAMU?', headline: 'Warna Urine = Sinyal Tubuhmu', text: '**Raka:** "Dok, kok warna urine bisa berubah-ubah ya?" **Dr. Hana:** "Itu petunjuk cepat kecukupan cairanmu!"' },
+      { art: 'colors', hl: [0, 1], badge: 'SKALA 1–2 · OPTIMAL', headline: 'Kuning Pucat = Raka Cukup Minum', text: '**Dr. Hana:** "Kalau **kuning pucat jernih**, artinya tubuhmu terhidrasi dengan baik. Pertahankan ya, Raka!"' },
+      { art: 'colors', hl: [3, 4], badge: 'SKALA 4–5 · KURANG MINUM', headline: 'Kuning Pekat = Waktunya Minum', text: '**Dr. Hana:** "Kuning pekat sampai oranye berarti urine terlalu pekat. Yuk minum air putih!"' },
+      { art: 'colors', hl: [5], badge: 'SKALA 6 · WASPADA', headline: 'Merah / Cokelat? Jangan Abaikan!', text: '**Dr. Hana:** "Warna **merah atau kecokelatan** bisa karena darah, obat, atau infeksi. Bila berulang, segera periksa!"' }
     ]
   },
   {
     id: 'isk',
-    title: 'ISK & Sistitis: Kenali & Cegah',
-    desc: 'Mengapa nyeri saat kencing dan cara mencegahnya',
-    tag: 'INFEKSI',
+    title: 'Tahukah Kamu? Bahaya Tahan Kencing',
+    desc: 'Kenapa Raka mengeluh perih saat berkemih & cara cegah ISK',
+    tag: 'TAHUKAH KAMU?',
     src: '',
     scenes: [
-      { art: 'isk', hl: 'entry', badge: 'FAKTA ISK & SISTITIS', headline: 'Bakteri Masuk Lewat Uretra', text: '**Sistitis** terjadi saat bakteri (seringnya *E. coli*) masuk lewat uretra dan menginfeksi **kandung kemih**.' },
-      { art: 'icon', hl: 'droplet', badge: 'CEGAH #1', headline: 'Bilas Kuman dengan Air Putih', text: 'Minum air yang cukup sepanjang hari membantu **membilas bakteri** sebelum sempat berkembang biak.' },
-      { art: 'icon', hl: 'clock', badge: 'CEGAH #2', headline: 'Stop Tahan Kencing!', text: 'Menahan buang air kecil terlalu lama membuat urine tergenang dan jadi **sarang bakteri**.' },
-      { art: 'icon', hl: 'alert', badge: 'TANDA BAHAYA', headline: 'Demam + Nyeri Pinggang = Bahaya', text: 'Nyeri/panas saat berkemih disertai **demam atau nyeri pinggang** bisa berarti infeksi naik ke ginjal. Segera ke dokter!' }
+      { art: 'icon', hl: 'alert', badge: 'TAHUKAH KAMU?', headline: 'Raka Sering Tahan Kencing Saat Sibuk', text: '**Raka:** "Aduh, perut bawahku nyeri dan perih pas kencing!" **Dr. Hana:** "Hati-hati, menahan kencing bisa memicu **ISK & Sistitis**!"' },
+      { art: 'isk', hl: 'entry', badge: 'APA YANG TERJADI?', headline: 'Bakteri Berkembang di Kandung Kemih', text: '**Dr. Hana:** "Saat urine tertahan, bakteri seperti *E. coli* mudah masuk lewat uretra dan menginfeksi **kandung kemih**."' },
+      { art: 'icon', hl: 'droplet', badge: 'SOLUSI #1', headline: 'Raka Mulai Rutin Minum Air', text: '**Dr. Hana:** "Minum air putih cukup membantu **membilas bakteri** keluar sebelum sempat menempel."' },
+      { art: 'icon', hl: 'clock', badge: 'SOLUSI #2', headline: 'Pasang Pengingat Kencing di GeniCare!', text: '**Raka:** "Sekarang aku pakai pengingat berkemih GeniCare biar nggak pernah nahan kencing lagi!"' }
     ]
   },
   {
     id: 'batu',
-    title: 'Batu Saluran Kemih & Hidronefrosis',
-    desc: 'Bagaimana kristal terbentuk dan menyumbat aliran urine',
-    tag: 'SUMBATAN',
+    title: 'Tahukah Kamu? Kenapa Batu Bisa Terbentuk?',
+    desc: 'Cerita terbentuknya batu saluran kemih hingga hidronefrosis',
+    tag: 'TAHUKAH KAMU?',
     src: '',
     scenes: [
-      { art: 'stone', hl: 'crystal', badge: 'PROSES TERBENTUK', headline: 'Urine Pekat Jadi Kristal', text: 'Kurang minum membuat mineral seperti kalsium & asam urat mengendap lalu menggumpal menjadi **batu**.' },
-      { art: 'stone', hl: 'block', badge: 'NYERI KOLIK', headline: 'Batu Turun Menyumbat Ureter', text: 'Batu yang bergeser ke **ureter** memicu nyeri pinggang hebat bergelombang yang menjalar ke perut bawah.' },
-      { art: 'hydro', hl: 'swell', badge: 'KOMPLIKASI · HIDRONEFROSIS', headline: 'Urine Tertahan = Ginjal Bengkak', text: 'Bila saluran tersumbat total, urine menumpuk di ginjal hingga membengkak (**hidronefrosis**).' },
-      { art: 'icon', hl: 'shield', badge: 'PENCEGAHAN', headline: 'Minum Cukup & Kurangi Garam', text: 'Jaga urine tetap kuning pucat, **kurangi makanan tinggi garam**, dan segera periksa bila nyeri hebat.' }
+      { art: 'stone', hl: 'crystal', badge: 'TAHUKAH KAMU?', headline: 'Kurang Minum Bikin Mineral Mengkristal', text: '**Dr. Hana:** "Tahukah kamu? Urine yang terlalu pekat membuat kalsium & asam urat mengendap menjadi **batu**!"' },
+      { art: 'stone', hl: 'block', badge: 'KONFLIK · NYERI KOLIK', headline: 'Batu Turun Menyumbat Ureter', text: '**Raka:** "Pantas bisa nyeri pinggang hebat sampai ke perut bawah!" **Dr. Hana:** "Ya, itu saat batu menggores atau menyumbat ureter."' },
+      { art: 'hydro', hl: 'swell', badge: 'WASPADA · HIDRONEFROSIS', headline: 'Aliran Mampet = Ginjal Bengkak', text: '**Dr. Hana:** "Bila tersumbat total, urine menumpuk di ginjal hingga membengkak (**hidronefrosis**)."' },
+      { art: 'icon', hl: 'shield', badge: 'PENCEGAHAN', headline: 'Cukup Minum & Kurangi Garam', text: '**Dr. Hana:** "Jaga warna urine tetap kuning pucat, kurangi garam berlebih, dan periksa bila nyeri hebat!"' }
     ]
   },
   {
     id: 'akickd',
-    title: 'Bedanya AKI vs CKD pada Ginjal',
-    desc: 'Gangguan ginjal akut yang mendadak vs kronis yang menahun',
-    tag: 'GINJAL',
+    title: 'Tahukah Kamu? Beda AKI vs CKD',
+    desc: 'Dr. Hana menjelaskan gangguan ginjal mendadak vs menahun',
+    tag: 'TAHUKAH KAMU?',
     src: '',
     scenes: [
-      { art: 'akickd', hl: 'aki', badge: 'AKI · MENDADAK', headline: 'AKI: Terjadi dalam Jam–Hari', text: '**AKI (Acute Kidney Injury)** adalah penurunan fungsi ginjal mendadak akibat dehidrasi berat, infeksi, atau obat.' },
-      { art: 'akickd', hl: 'ckd', badge: 'CKD · MENAHUN', headline: 'CKD: Berlangsung > 3 Bulan', text: '**CKD (Penyakit Ginjal Kronis)** berkembang perlahan > 3 bulan, sering dipicu **diabetes & hipertensi**.' },
-      { art: 'akickd', hl: 'lab', badge: 'DETEKSI DINI', headline: 'Cek Kreatinin, eGFR & Albumin', text: 'CKD tahap awal **sering tanpa gejala**. Tes darah **eGFR** dan **protein urine** membantu deteksi dini.' },
-      { art: 'icon', hl: 'shield', badge: 'JAGA GINJALMU', headline: 'Kontrol Tensi & Hindari Obat Sembarangan', text: 'Kendalikan tekanan darah & gula darah, dan **hindari obat antinyeri jangka panjang** tanpa resep dokter.' }
+      { art: 'akickd', hl: 'aki', badge: 'TAHUKAH KAMU?', headline: 'AKI: Terjadi Mendadak dalam Jam–Hari', text: '**Dr. Hana:** "**AKI** adalah penurunan fungsi ginjal mendadak akibat dehidrasi berat, infeksi, atau obat—sering bisa pulih bila cepat ditangani!"' },
+      { art: 'akickd', hl: 'ckd', badge: 'CKD · MENAHUN', headline: 'CKD: Diam-Diam Rusak > 3 Bulan', text: '**Dr. Hana:** "Sedangkan **CKD** berlangsung perlahan > 3 bulan, paling sering dipicu **diabetes & hipertensi**."' },
+      { art: 'akickd', hl: 'lab', badge: 'DETEKSI DINI', headline: 'CKD Awal Sering Tanpa Gejala!', text: '**Raka:** "Jadi harus cek apa, Dok?" **Dr. Hana:** "Pantau **kreatinin (eGFR)** dan **albumin urine** secara berkala."' },
+      { art: 'icon', hl: 'shield', badge: 'AKSI SEHAT', headline: 'Hindari Obat Antinyeri Sembarangan', text: '**Dr. Hana:** "Kontrol tensi & gula darah, serta jangan minum obat pereda nyeri jangka panjang tanpa resep."' }
     ]
   },
   {
     id: 'pria',
-    title: 'Prostat (BPH), Varikokel & Kesehatan Pria',
-    desc: 'Memahami pembesaran prostat, varikokel, dan fungsi reproduksi',
-    tag: 'PRIA',
+    title: 'Tahukah Kamu? Prostat & Varikokel Pria',
+    desc: 'Mengenal BPH dan varikokel bersama Raka & Dr. Hana',
+    tag: 'TAHUKAH KAMU?',
     src: '',
     scenes: [
-      { art: 'bph', hl: 'normal', badge: 'ANATOMI PROSTAT', headline: 'Prostat Mengelilingi Uretra', text: 'Kelenjar **prostat** berada tepat di bawah kandung kemih dan mengelilingi saluran keluar urine.' },
-      { art: 'bph', hl: 'enlarged', badge: 'BPH · PEMBESARAN JINAK', headline: 'Prostat Membesar = Pancaran Lemah', text: 'Pada **BPH**, prostat yang membesar menekan uretra sehingga pancaran urine lemah dan sering terbangun malam.' },
-      { art: 'varikokel', hl: 'vein', badge: 'VARIKOKEL', headline: 'Vena Melebar di Kantong Zakar', text: '**Varikokel** adalah pelebaran vena di skrotum yang terasa seperti "kantong cacing" dan dapat memengaruhi kesuburan.' },
-      { art: 'icon', hl: 'alert', badge: 'PERIKSA RUTIN', headline: 'Jangan Anggap Sepele Keluhan', text: 'Segera ke dokter bila ada **benjolan, pegal menahun, disfungsi ereksi**, atau nyeri testis mendadak (darurat!).' }
+      { art: 'bph', hl: 'normal', badge: 'TAHUKAH KAMU?', headline: 'Prostat Mengelilingi Saluran Kencing', text: '**Dr. Hana:** "Pada pria, kelenjar **prostat** berada tepat di bawah kandung kemih dan mengelilingi uretra."' },
+      { art: 'bph', hl: 'enlarged', badge: 'BPH · PEMBESARAN JINAK', headline: 'Prostat Membesar = Pancaran Lemah', text: '**Dr. Hana:** "Pada **BPH**, prostat membesar dan menekan uretra sehingga pancaran urine melemah dan sering bangun malam."' },
+      { art: 'varikokel', hl: 'vein', badge: 'VARIKOKEL', headline: 'Vena Melebar Seperti "Kantong Cacing"', text: '**Raka:** "Kalau rasa pegal di kantong zakar itu apa, Dok?" **Dr. Hana:** "Bisa jadi **varikokel**—pelebaran vena di skrotum."' },
+      { art: 'icon', hl: 'alert', badge: 'TANDA DARURAT', headline: 'Nyeri Testis Mendadak = Segera ke IGD!', text: '**Dr. Hana:** "Bila ada benjolan, keluhan berkemih, atau nyeri testis mendadak hebat, segera periksa ke dokter!"' }
     ]
   }
 ];

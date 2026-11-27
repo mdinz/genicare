@@ -10,7 +10,7 @@ const defaultUrineRem = () => ({
   note: 'Waktunya buang air kecil, jangan ditahan ya!'
 });
 
-export const state = { air: [], kemih: [], target: 2000, rem: 0, urineRem: defaultUrineRem() };
+export const state = { air: [], kemih: [], target: 2000, rem: 0, urineRem: defaultUrineRem(), avatar: '' };
 const sum = a => a.reduce((s, x) => s + x.ml, 0);
 
 export function load() {
@@ -19,8 +19,10 @@ export function load() {
   state.target = get('gc_target', 2000);
   state.rem = get('gc_rem', 0);
   state.urineRem = { ...defaultUrineRem(), ...get('gc_urine_rem', {}) };
+  state.avatar = get('gc_avatar', '');
 }
-export function clear() { state.air = []; state.kemih = []; state.urineRem = defaultUrineRem(); }
+export function clear() { state.air = []; state.kemih = []; state.urineRem = defaultUrineRem(); state.avatar = ''; }
+export function setAvatar(dataUrl) { state.avatar = dataUrl || ''; set('gc_avatar', state.avatar); }
 export function addWater(ml) { if (!(ml > 0)) return false; state.air.push({ d: hari(), t: jam(), ml }); set('gc_air', state.air); return true; }
 export function addUrine(w, kl) { state.kemih.push({ d: hari(), t: jam(), w, kl }); set('gc_kemih', state.kemih); }
 export function setTarget(n) { state.target = n >= 500 ? n : 2000; set('gc_target', state.target); }

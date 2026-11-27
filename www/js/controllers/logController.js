@@ -5,7 +5,7 @@ import { $ } from '../utils/dom.js';
 
 let color = null, timer, urineTimer, lastFiredKey = '', user = null;
 
-function refresh() { V.render({ nama: user && user.nama, account: user ? user.nama + ' · ' + user.email : '', today: H.today(), week: H.week(), target: H.state.target }); }
+function refresh() { V.render({ nama: user && user.nama, account: user ? user.nama + ' · ' + user.email : '', today: H.today(), week: H.week(), target: H.state.target, avatar: H.state.avatar }); }
 function notify(title, body) {
   V.showToast(`${title}: ${body}`);
   try {
@@ -62,11 +62,40 @@ export const actions = {
   uRemPreset: m => { H.setUrineReminder({ minutes: +m }); V.renderUrineRem(H.state.urineRem); scheduleUrine(); },
   uRemAddTime: () => { if (H.addUrineTime(V.readNewUrineTime())) { V.renderUrineRem(H.state.urineRem); scheduleUrine(); } },
   uRemDelTime: t => { H.removeUrineTime(t); V.renderUrineRem(H.state.urineRem); scheduleUrine(); },
-  uRemTest: () => { reqPerm(); notify('GeniCare · Berkemih', (H.state.urineRem.note || '').trim() || 'Waktunya buang air kecil, jangan ditahan ya!'); }
+  uRemTest: () => { reqPerm(); notify('GeniCare · Berkemih', (H.state.urineRem.note || '').trim() || 'Waktunya buang air kecil, jangan ditahan ya!'); },
+  openProf: () => V.toggleProf(true),
+  closeProf: () => V.toggleProf(false),
+  pickPp: () => $('#ppInput').click(),
+  delPp: () => { H.setAvatar(''); V.renderAvatar('', user && user.nama); V.showToast('Foto profil dihapus.'); }
 };
+
+function resizeAvatar(file, cb) {
+  const r = new FileReader();
+  r.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const s = 200, c = document.createElement('canvas'); c.width = s; c.height = s;
+      const ctx = c.getContext('2d'), min = Math.min(img.width, img.height);
+      ctx.drawImage(img, (img.width - min) / 2, (img.height - min) / 2, min, min, 0, 0, s, s);
+      cb(c.toDataURL('image/jpeg', 0.82));
+    };
+    img.src = r.result;
+  };
+  r.readAsDataURL(file);
+}
 
 export function setup() {
   V.setup();
+  $('#ppInput').addEventListener('change', e => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    resizeAvatar(f, url => {
+      H.setAvatar(url);
+      V.renderAvatar(url, user && user.nama);
+      V.showToast('Foto profil berhasil diperbarui!');
+    });
+    e.target.value = '';
+  });
   $('#target').addEventListener('change', e => { H.setTarget(+e.target.value); V.setInputs(H.state.target, H.state.rem, H.state.urineRem); refresh(); });
   $('#remInt').addEventListener('change', e => { H.setReminder(+e.target.value); schedule(); });
   $('#uRemMode').addEventListener('change', e => { H.setUrineReminder({ mode: e.target.value }); V.renderUrineRem(H.state.urineRem); scheduleUrine(); });
@@ -76,4 +105,4 @@ export function setup() {
   $('#uRemNote').addEventListener('change', e => { H.setUrineReminder({ note: e.target.value }); scheduleUrine(); });
 }
 export function onEnter(u) { user = u; setScope(u.uid); H.load(); V.setInputs(H.state.target, H.state.rem, H.state.urineRem); refresh(); schedule(); scheduleUrine(); }
-export function onLeave() { user = null; clearInterval(timer); clearInterval(urineTimer); H.clear(); setScope(null); }
+export function onLeave() { user = null; clearInterval(timer); clearInterval(urineTimer); V.toggleProf(false); H.clear(); setScope(null); }

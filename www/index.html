@@ -62,9 +62,9 @@
     <div class="hero-deco"></div>
     <div class="hero-top">
       <div><p class="hero-greet" id="sapa">Selamat datang</p><h2 class="hero-title">Jaga kesehatanmu<br>hari ini</h2></div>
-      <div class="hero-avatar" id="heroAvatar" aria-hidden="true">
+      <button type="button" class="hero-avatar" id="heroAvatar" data-act="openProf" aria-label="Profil dan pengaturan akun">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
+      </button>
     </div>
     <div class="hero-prog">
       <div class="hero-prog-meta"><span>Progres hidrasi harian</span><strong id="hPct">0%</strong></div>
@@ -144,15 +144,6 @@
     <div id="mingguan"></div>
     <div class="btns mt8"><button class="btn-sm btn-outline" data-act="download">Unduh ringkasan</button></div>
   </div>
-
-  <div class="card">
-    <div class="card-head">
-      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-      <h3>Akun</h3>
-    </div>
-    <p class="sub mb0" id="akun"></p>
-    <div class="btns mt8"><button class="btn-sm btn-outline btn-danger" data-act="logout">Keluar</button></div>
-  </div>
 </section>
 
 <!-- TAB: CATATAN -->
@@ -229,6 +220,27 @@
 </section>
 
 </main>
+
+<div id="profModal" class="modal" hidden>
+  <div class="modal-backdrop" data-act="closeProf"></div>
+  <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="profTitle">
+    <div class="modal-handle"></div>
+    <div class="prof-head">
+      <div class="prof-pic" id="profPic"></div>
+      <div>
+        <h3 id="profTitle">Profil Saya</h3>
+        <p class="sub mb0" id="akun"></p>
+      </div>
+    </div>
+    <input type="file" id="ppInput" accept="image/*" hidden>
+    <div class="prof-actions">
+      <button type="button" class="btn btn-full" data-act="pickPp">Ubah Foto Profil</button>
+      <button type="button" class="btn-sm btn-outline" id="delPpBtn" data-act="delPp" hidden>Hapus Foto</button>
+      <button type="button" class="btn-sm btn-outline btn-danger" data-act="logout">Keluar dari Akun</button>
+      <button type="button" class="lnk" data-act="closeProf" style="text-align:center">Tutup</button>
+    </div>
+  </div>
+</div>
 
 <div id="toast" role="status" aria-live="polite"></div>
 <nav id="nav"></nav>

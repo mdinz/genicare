@@ -53,10 +53,26 @@ export function showToast(msg) {
   toastTimer = setTimeout(() => el.classList.remove('on'), 4500);
 }
 
+const USER_ICO = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+
+export function renderAvatar(avatar, nama) {
+  const init = nama && nama.trim() ? nama.trim()[0].toUpperCase() : '';
+  const html = avatar ? `<img src="${avatar}" alt="Foto profil">` : (init || USER_ICO);
+  if ($('#heroAvatar')) $('#heroAvatar').innerHTML = html;
+  if ($('#profPic')) $('#profPic').innerHTML = html;
+  if ($('#delPpBtn')) $('#delPpBtn').hidden = !avatar;
+}
+
+export function toggleProf(open) {
+  const m = $('#profModal');
+  if (m) m.hidden = !open;
+}
+
 export function render(d) {
   const j = new Date().getHours(), sp = j < 11 ? 'Selamat pagi' : j < 15 ? 'Selamat siang' : j < 19 ? 'Selamat sore' : 'Selamat malam';
   $('#sapa').textContent = sp + (d.nama ? ', ' + d.nama.split(' ')[0] : '') + '!';
-  if ($('#heroAvatar') && d.nama && d.nama.trim()) $('#heroAvatar').textContent = d.nama.trim()[0].toUpperCase();
+  renderAvatar(d.avatar, d.nama);
+  if ($('#profTitle')) $('#profTitle').textContent = d.nama || 'Profil Saya';
   $('#hAir').textContent = d.today.ml + ' ml'; $('#hKemih').textContent = d.today.n + ' kali';
   const tgt = d.target || 2000, pct = Math.min(100, Math.round((d.today.ml / tgt) * 100));
   if ($('#hPct')) $('#hPct').textContent = `${pct}% (${d.today.ml}/${tgt} ml)`;
