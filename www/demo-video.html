@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeniCare — Video Demonstrasi Aplikasi (9:16 TikTok)</title>
+<style>
+  :root{--bg:#091716;--card:#112624;--teal:#4fd1c5;--ink:#eefaf8;--mute:#8cb5b0}
+  *{box-sizing:border-box;margin:0}
+  body{font-family:"Nunito","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:18px 14px 36px;gap:14px}
+  h1{font-size:20px;text-align:center}
+  .sub{font-size:13px;color:var(--mute);text-align:center;max-width:460px}
+  .wrap{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:400px}
+  canvas{width:100%;max-width:340px;aspect-ratio:9/16;border-radius:22px;box-shadow:0 20px 50px #0008;border:2px solid #ffffff22;background:#0b2421}
+  .ctl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%}
+  button,a.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:10px 14px;cursor:pointer;text-decoration:none;font-size:13.5px}
+  .p{background:var(--teal);color:#08201e}
+  .o{background:var(--card);color:var(--ink);border:1px solid #ffffff26}
+  .rec{background:#ff4d6d;color:#fff}
+  .status{font-size:12.5px;color:var(--teal);min-height:18px;text-align:center}
+</style>
+</head>
+<body>
+  <h1>GeniCare — Video Demo 9:16 (TikTok / Reels)</h1>
+  <p class="sub">Pratinjau langsung animasi demonstrasi aplikasi GeniCare dengan musik latar sintesis & ekspor ke file video.</p>
+  <div class="wrap">
+    <canvas id="cv" width="720" height="1280"></canvas>
+    <div class="ctl">
+      <button class="p" id="playBtn">Putar / Jeda</button>
+      <button class="o" id="repBtn">Ulangi</button>
+      <button class="o" id="muteBtn">Suara: Nyala</button>
+      <button class="rec" id="recBtn">Rekam & Unduh Video (.webm)</button>
+      <a class="btn o" href="index.html">Buka Aplikasi</a>
+    </div>
+    <p class="status" id="st">Siap diputar (durasi ±36 detik)</p>
+  </div>
+
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const W = 720, H = 1280, DUR = 36; // detik
+let t = 0, playing = true, last = performance.now(), muted = false, recording = false;
+
+const ease = x => x < 0 ? 0 : x > 1 ? 1 : 1 - Math.pow(1 - x, 3);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const seg = (s, e) => clamp((t - s) / (e - s), 0, 1);
+
+function rr(x, y, w, h, r, fill, stroke, lw = 2) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+  if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+  if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke(); }
+}
+
+function txt(str, x, y, size = 32, color = '#fff', align = 'center', weight = '800', maxW = 640) {
+  ctx.fillStyle = color;
+  ctx.font = `${weight} ${size}px "Nunito","Segoe UI",sans-serif`;
+  ctx.textAlign = align;
+  ctx.textBaseline = 'middle';
+  const words = str.split(' '), lines = [];
+  let cur = '';
+  for (const w of words) {
+    const test = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; }
+    else cur = test;
+  }
+  if (cur) lines.push(cur);
+  const lh = size * 1.25;
+  lines.forEach((l, i) => ctx.fillText(l, x, y + (i - (lines.length - 1) / 2) * lh));
+}
+
+function drawBg() {
+  const g = ctx.createLinearGradient(0, 0, W, H);
+  g.addColorStop(0, '#0a2926'); g.addColorStop(0.55, '#124640'); g.addColorStop(1, '#071c1a');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  // floating glowing orbs
+  const ox = Math.sin(t * 0.9) * 50, oy = Math.cos(t * 0.7) * 40;
+  const g1 = ctx.createRadialGradient(580 + ox, 220 + oy, 10, 580 + ox, 220 + oy, 220);
+  g1.addColorStop(0, '#4fd1c544'); g1.addColorStop(1, '#4fd1c500');
+  ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H);
+  const g2 = ctx.createRadialGradient(140 - ox, 1050 - oy, 10, 140 - ox, 1050 - oy, 240);
+  g2.addColorStop(0, '#f2c94c33'); g2.addColorStop(1, '#f2c94c00');
+  ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+}
+
+function drawPhone(x, y, w, h, title, drawInner) {
+  ctx.save();
+  ctx.shadowColor = '#00000088'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 18;
+  rr(x, y, w, h, 44, '#0c1f1d', '#4fd1c566', 4);
+  ctx.restore();
+  rr(x + 14, y + 14, w - 28, h - 28, 34, '#f7faf9');
+  // notch
+  rr(x + w / 2 - 55, y + 22, 110, 18, 9, '#0c1f1d');
+  // header inside phone
+  rr(x + 14, y + 14, w - 28, 86, [34, 34, 0, 0], '#1f6f68');
+  txt(title, x + w / 2, y + 66, 22, '#fff', 'center', '800', w - 60);
+  ctx.save();
+  ctx.beginPath(); ctx.roundRect(x + 14, y + 100, w - 28, h - 114, [0, 0, 34, 34]); ctx.clip();
+  drawInner(x + 28, y + 116, w - 56, h - 140);
+  ctx.restore();
+}
+
+function drawScene() {
+  drawBg();
+
+  // Top TikTok-style progress bar
+  rr(36, 36, W - 72, 8, 4, '#ffffff25');
+  rr(36, 36, (W - 72) * (t / DUR), 8, 4, '#6fffe9');
+  rr(36, 62, 190, 34, 17, '#ffffff1c', '#ffffff33', 1.5);
+  txt('GENICARE DEMO', 131, 79, 15, '#9ff7ea', 'center', '800');
+
+  if (t < 4.5) {
+    // SCENE 1: HOOK
+    const p = ease(seg(0, 0.7));
+    ctx.save(); ctx.globalAlpha = p;
+    const pulse = 1 + Math.sin(t * 7) * 0.06;
+    ctx.translate(W / 2, 410); ctx.scale(pulse, pulse);
+    ctx.beginPath(); ctx.arc(0, 0, 120, 0, Math.PI * 2); ctx.fillStyle = '#ff6b6b28'; ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 0, 86, 0, Math.PI * 2); ctx.fillStyle = '#ff6b6b44'; ctx.fill();
+    txt('⚠️', 0, 4, 84);
+    ctx.restore();
+    txt('SERING TAHAN KENCING', W / 2, 620, 44, '#6fffe9', 'center', '900');
+    txt('ATAU KURANG MINUM AIR?', W / 2, 684, 40, '#fff', 'center', '800');
+    rr(110, 770, 500, 96, 22, '#071b19aa', '#6fffe955', 2);
+    txt('Hati-hati! Bisa picu ISK, batu ginjal, sampai gangguan ginjal.', W / 2, 818, 23, '#d9f7f2', 'center', '700', 460);
+  } else if (t < 9.5) {
+    // SCENE 2: INTRO GENICARE
+    const p = ease(seg(4.5, 5.3));
+    txt('KENALIN APLIKASI', W / 2, 170, 26, '#9ff7ea', 'center', '800');
+    txt('GeniCare 💧', W / 2, 230, 58, '#fff', 'center', '900');
+    const py = 310 + (1 - p) * 160;
+    drawPhone(140, py, 440, 780, 'Beranda GeniCare', (ix, iy, iw) => {
+      rr(ix, iy, iw, 110, 18, '#e8f3f1');
+      txt('Selamat pagi!', ix + 18, iy + 34, 20, '#144b46', 'left', '800');
+      txt('Jaga kesehatanmu hari ini.', ix + 18, iy + 70, 24, '#17302d', 'left', '800');
+      rr(ix, iy + 130, iw / 2 - 8, 120, 16, '#fff', '#d5e5e2');
+      txt('1.500 ml', ix + iw / 4 - 4, iy + 178, 28, '#1f6f68', 'center', '900');
+      txt('Air hari ini', ix + iw / 4 - 4, iy + 218, 16, '#5d7773', 'center', '700');
+      rr(ix + iw / 2 + 8, iy + 130, iw / 2 - 8, 120, 16, '#fff', '#d5e5e2');
+      txt('4 kali', ix + iw * 0.75 + 4, iy + 178, 28, '#1f6f68', 'center', '900');
+      txt('Berkemih', ix + iw * 0.75 + 4, iy + 218, 16, '#5d7773', 'center', '700');
+      rr(ix, iy + 270, iw, 240, 18, '#fff', '#d5e5e2');
+      txt('Kenali, pantau & jaga kesehatan genitourinary dalam satu aplikasi.', ix + iw / 2, iy + 390, 22, '#17302d', 'center', '700', iw - 40);
+    });
+  } else if (t < 16) {
+    // SCENE 3: HYDRATION + CUSTOM PENGINGAT KENCING
+    const p = ease(seg(9.5, 10.2));
+    txt('FITUR #1 · PENGINGAT CUSTOM', W / 2, 165, 24, '#6fffe9', 'center', '900');
+    txt('Atur Jadwal Kencing & Minum Sendiri!', W / 2, 225, 34, '#fff', 'center', '800', 620);
+    drawPhone(140, 300 + (1 - p) * 60, 440, 790, 'Pengingat Custom', (ix, iy, iw) => {
+      rr(ix, iy, iw, 175, 18, '#fff', '#d5e5e2');
+      txt('Pengingat Berkemih (Custom)', ix + 16, iy + 30, 19, '#17302d', 'left', '800');
+      rr(ix + 16, iy + 58, iw - 32, 44, 10, '#e8f3f1', '#1f6f68');
+      txt('Mode: Jadwal Jam Tertentu ▾', ix + 30, iy + 80, 17, '#144b46', 'left', '700');
+      const times = ['08:00', '11:00', '14:00', '17:00', '20:00'];
+      times.forEach((tm, idx) => {
+        const cx = ix + 16 + (idx % 3) * 116, cy = iy + 116 + Math.floor(idx / 3) * 34;
+        if (idx < 3) { rr(cx, cy, 104, 30, 15, '#1f6f68'); txt(tm + '  ×', cx + 52, cy + 15, 15, '#fff', 'center', '700'); }
+      });
+      // pop notification
+      const np = ease(seg(11.5, 12.2));
+      if (np > 0) {
+        ctx.save(); ctx.globalAlpha = np;
+        rr(ix, iy + 210, iw, 110, 18, '#144b46');
+        txt('🔔 GeniCare · Berkemih', ix + 20, iy + 245, 19, '#6fffe9', 'left', '800');
+        txt('Waktunya buang air kecil, jangan ditahan ya!', ix + 20, iy + 282, 16, '#fff', 'left', '700', iw - 40);
+        ctx.restore();
+      }
+      rr(ix, iy + 345, iw, 160, 18, '#fff', '#d5e5e2');
+      txt('Catat Minum Cepat', ix + 16, iy + 375, 19, '#17302d', 'left', '800');
+      [150, 250, 500].forEach((ml, i) => {
+        rr(ix + 16 + i * 118, iy + 408, 108, 44, 10, '#e8f3f1', '#1f6f68');
+        txt('+' + ml + ' ml', ix + 70 + i * 118, iy + 430, 16, '#1f6f68', 'center', '800');
+      });
+    });
+  } else if (t < 22) {
+    // SCENE 4: URINE COLOR GUIDE
+    txt('FITUR #2 · URINE DIARY', W / 2, 165, 24, '#6fffe9', 'center', '900');
+    txt('Pantau Warna Urine & Keluhan Harian', W / 2, 225, 34, '#fff', 'center', '800', 620);
+    drawPhone(140, 300, 440, 790, 'Catatan Berkemih', (ix, iy, iw) => {
+      rr(ix, iy, iw, 240, 18, '#fff', '#d5e5e2');
+      txt('Skala Warna Urine', ix + 16, iy + 30, 19, '#17302d', 'left', '800');
+      const cols = ['#f6f1c9', '#f1e68a', '#e9cf3c', '#d9a521', '#b9741a', '#8a3b14'];
+      const active = Math.floor((t - 16) * 1.2) % 6;
+      cols.forEach((c, i) => {
+        const bh = i === active ? 130 : 105;
+        rr(ix + 16 + i * 59, iy + 185 - bh, 48, bh, 12, c, i === active ? '#144b46' : '#0002', i === active ? 4 : 1.5);
+      });
+      txt(active <= 1 ? 'Hidrasi Cukup ✓' : active <= 3 ? 'Perlu Tambah Minum' : 'Waspada · Cek Keluhan', ix + iw / 2, iy + 212, 18, '#144b46', 'center', '800');
+      rr(ix, iy + 260, iw, 220, 18, '#fff', '#d5e5e2');
+      txt('Catatan Keluhan', ix + 16, iy + 292, 19, '#17302d', 'left', '800');
+      ['☑ Nyeri/panas saat berkemih', '☐ Urine berbusa', '☐ Bangun malam berkemih'].forEach((s, i) => {
+        txt(s, ix + 16, iy + 340 + i * 44, 17, '#17302d', 'left', '700');
+      });
+    });
+  } else if (t < 29) {
+    // SCENE 5: EDUKASI TIKTOK ANIMASI + 8 MATERI
+    txt('FITUR #3 · EDUKASI LENGKAP', W / 2, 165, 24, '#6fffe9', 'center', '900');
+    txt('Animasi Interaktif + 8 Materi Medis', W / 2, 225, 34, '#fff', 'center', '800', 620);
+    drawPhone(140, 300, 440, 790, '8 Materi Edukasi', (ix, iy, iw) => {
+      const items = [
+        '1. ISK & Sistitis', '2. Batu Saluran Kemih', '3. AKI (Ginjal Akut)',
+        '4. CKD (Ginjal Kronis)', '5. BPH (Prostat)', '6. Hidronefrosis',
+        '7. Disfungsi Ereksi', '8. Varikokel'
+      ];
+      items.forEach((it, i) => {
+        const reveal = ease(seg(22 + i * 0.45, 22.5 + i * 0.45));
+        ctx.save(); ctx.globalAlpha = reveal;
+        rr(ix, iy + i * 64, iw, 54, 12, '#fff', '#d5e5e2');
+        rr(ix + 10, iy + i * 64 + 10, 34, 34, 9, '#e8f3f1');
+        txt('📘', ix + 27, iy + i * 64 + 28, 18);
+        txt(it, ix + 56, iy + i * 64 + 28, 17, '#17302d', 'left', '800');
+        ctx.restore();
+      });
+    });
+  } else if (t < 33.5) {
+    // SCENE 6: CEK KELUHAN & TANYA AI
+    txt('FITUR #4 · HEALTH ALERT & AI', W / 2, 165, 24, '#6fffe9', 'center', '900');
+    txt('Deteksi Urgensi & Tanya GeniCare AI', W / 2, 225, 34, '#fff', 'center', '800', 620);
+    drawPhone(140, 300, 440, 790, 'Cek Keluhan & AI', (ix, iy, iw) => {
+      const alerts = [
+        ['HIJAU · Pantau Mandiri', '#2e8b57'],
+        ['KUNING · Konsultasi Dokter', '#c98a0b'],
+        ['MERAH · Segera ke IGD!', '#c0392b']
+      ];
+      alerts.forEach(([label, col], i) => {
+        rr(ix, iy + i * 76, iw, 62, 14, col);
+        txt(label, ix + iw / 2, iy + i * 76 + 31, 18, '#fff', 'center', '800');
+      });
+      rr(ix, iy + 250, iw, 240, 18, '#fff', '#d5e5e2');
+      rr(ix + 60, iy + 272, iw - 76, 54, 14, '#1f6f68');
+      txt('Dok, nyeri saat kencing kenapa ya?', ix + 74, iy + 299, 15, '#fff', 'left', '700', iw - 100);
+      rr(ix + 16, iy + 342, iw - 48, 120, 14, '#e8f3f1');
+      txt('Bisa jadi tanda ISK/Sistitis. Perbanyak minum & periksakan ke tenaga kesehatan.', ix + 30, iy + 402, 15, '#17302d', 'left', '700', iw - 76);
+    });
+  } else {
+    // SCENE 7: OUTRO CTA
+    const p = ease(seg(33.5, 34.3));
+    ctx.save(); ctx.globalAlpha = p;
+    rr(140, 400, 440, 440, 40, '#144b46', '#6fffe9', 3);
+    txt('💧', W / 2, 495, 76);
+    txt('GeniCare', W / 2, 585, 52, '#fff', 'center', '900');
+    txt('Kenali, Pantau, Jaga Kesehatan Genitourinary', W / 2, 655, 24, '#9ff7ea', 'center', '700', 380);
+    rr(190, 730, 340, 64, 32, '#6fffe9');
+    txt('Coba Sekarang Gratis!', W / 2, 762, 24, '#08201e', 'center', '900');
+    ctx.restore();
+  }
+}
+
+function loop(now) {
+  const dt = Math.min(0.05, (now - last) / 1000);
+  last = now;
+  if (playing) {
+    t += dt;
+    if (t >= DUR) {
+      if (recording) { stopRecording(); t = DUR; playing = false; }
+      else t = 0;
+    }
+  }
+  drawScene();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+// Web Audio upbeat synth beat
+let ac, beatTimer, dest;
+function startAudio() {
+  if (muted) return;
+  if (!ac) {
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    dest = ac.createMediaStreamDestination();
+  }
+  if (ac.state === 'suspended') ac.resume();
+  clearInterval(beatTimer);
+  const notes = [261.63, 329.63, 392.0, 523.25, 392.0, 329.63, 293.66, 392.0];
+  let step = 0;
+  beatTimer = setInterval(() => {
+    if (!playing || muted) return;
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'triangle';
+    o.frequency.value = notes[step % notes.length];
+    g.gain.setValueAtTime(0.06, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.28);
+    o.connect(g); g.connect(ac.destination); if (dest) g.connect(dest);
+    o.start(); o.stop(ac.currentTime + 0.3);
+    step++;
+  }, 360);
+}
+
+let recorder, chunks = [];
+function startRecording() {
+  startAudio();
+  t = 0; playing = true; recording = true;
+  const vStream = cv.captureStream(30);
+  const tracks = [...vStream.getVideoTracks(), ...(dest ? dest.stream.getAudioTracks() : [])];
+  const combined = new MediaStream(tracks);
+  chunks = [];
+  const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+  recorder = new MediaRecorder(combined, { mimeType: mime });
+  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+  recorder.onstop = () => {
+    const blob = new Blob(chunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'genicare-demo-9x16.webm'; a.click();
+    document.getElementById('st').textContent = 'Video selesai direkam & diunduh (genicare-demo-9x16.webm)!';
+  };
+  recorder.start();
+  document.getElementById('st').textContent = 'Merekam video 9:16 (0–36 detik)... Mohon tunggu hingga selesai.';
+}
+function stopRecording() {
+  recording = false;
+  if (recorder && recorder.state === 'recording') recorder.stop();
+}
+
+document.getElementById('playBtn').onclick = () => { playing = !playing; if (playing) startAudio(); };
+document.getElementById('repBtn').onclick = () => { t = 0; playing = true; startAudio(); };
+document.getElementById('muteBtn').onclick = e => { muted = !muted; e.target.textContent = muted ? 'Suara: Mati' : 'Suara: Nyala'; if (!muted) startAudio(); };
+document.getElementById('recBtn').onclick = () => { if (!recording) startRecording(); };
+</script>
+</body>
+</html>
