@@ -56,7 +56,7 @@ export function showToast(msg) {
 export function render(d) {
   const j = new Date().getHours(), sp = j < 11 ? 'Selamat pagi' : j < 15 ? 'Selamat siang' : j < 19 ? 'Selamat sore' : 'Selamat malam';
   $('#sapa').textContent = sp + (d.nama ? ', ' + d.nama.split(' ')[0] : '') + '!';
-  if ($('#heroAvatar')) $('#heroAvatar').textContent = d.nama ? d.nama.trim()[0].toUpperCase() : '👤';
+  if ($('#heroAvatar') && d.nama && d.nama.trim()) $('#heroAvatar').textContent = d.nama.trim()[0].toUpperCase();
   $('#hAir').textContent = d.today.ml + ' ml'; $('#hKemih').textContent = d.today.n + ' kali';
   const tgt = d.target || 2000, pct = Math.min(100, Math.round((d.today.ml / tgt) * 100));
   if ($('#hPct')) $('#hPct').textContent = `${pct}% (${d.today.ml}/${tgt} ml)`;

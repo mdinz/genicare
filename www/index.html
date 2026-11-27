@@ -15,7 +15,11 @@
 <!-- ===== SPLASH ===== -->
 <div id="splash">
   <div class="sp-glow"></div>
-  <div class="sp-ring"><div class="sp-drop">💧</div></div>
+  <div class="sp-ring">
+    <div class="sp-drop" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="34" height="34" fill="#5eead4"><path d="M12 2.5C12 2.5 5.5 10 5.5 14.5a6.5 6.5 0 0013 0C18.5 10 12 2.5 12 2.5z"/></svg>
+    </div>
+  </div>
   <h1>GeniCare</h1>
   <p>Kenali · Pantau · Jaga</p>
   <div class="sp-bar"><i></i></div>
@@ -25,7 +29,9 @@
 <div id="auth" hidden>
   <div class="ab">
     <div class="auth-logo">
-      <div class="auth-icon">💧</div>
+      <div class="auth-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M12 2.5C12 2.5 5.5 10 5.5 14.5a6.5 6.5 0 0013 0C18.5 10 12 2.5 12 2.5z"/></svg>
+      </div>
       <h1>GeniCare</h1>
       <p class="auth-tag">Asisten Kesehatan Genitourinary</p>
     </div>
@@ -55,38 +61,48 @@
   <div class="hero">
     <div class="hero-deco"></div>
     <div class="hero-top">
-      <div><p class="hero-greet" id="sapa">Selamat datang</p><h2 class="hero-title">Jaga kesehatanmu<br>hari ini 💪</h2></div>
-      <div class="hero-avatar" id="heroAvatar">👤</div>
+      <div><p class="hero-greet" id="sapa">Selamat datang</p><h2 class="hero-title">Jaga kesehatanmu<br>hari ini</h2></div>
+      <div class="hero-avatar" id="heroAvatar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
     </div>
     <div class="hero-prog">
-      <div class="hero-prog-meta"><span>💧 Progres hidrasi</span><strong id="hPct">0%</strong></div>
+      <div class="hero-prog-meta"><span>Progres hidrasi harian</span><strong id="hPct">0%</strong></div>
       <div class="hbar"><i id="hBar"></i></div>
     </div>
   </div>
 
-  <div class="row g12">
+  <div class="row g12" style="margin-bottom:12px">
     <div class="stat-card">
-      <div class="stat-icon si-water">💧</div>
+      <div class="stat-icon si-water" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+      </div>
       <div class="stat-val" id="hAir">0 ml</div>
       <div class="stat-label">Air hari ini</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon si-urine">🕐</div>
+      <div class="stat-icon si-urine" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+      </div>
       <div class="stat-val" id="hKemih">0 kali</div>
       <div class="stat-label">Berkemih</div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-icon">⏰</span><h3>Pengingat minum</h3></div>
+    <div class="card-head">
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></span>
+      <h3>Pengingat minum</h3>
+    </div>
     <select id="remInt"><option value="0">Mati</option><option value="1">Tiap 1 jam</option><option value="2">Tiap 2 jam</option><option value="3">Tiap 3 jam</option></select>
     <p class="note">Aktif selama aplikasi terbuka.</p>
   </div>
 
   <div class="card">
     <div class="card-head">
-      <span class="card-icon">🚽</span><h3>Pengingat berkemih</h3>
-      <button type="button" class="btn-sm" data-act="uRemTest">🔔 Tes</button>
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span>
+      <h3>Pengingat berkemih</h3>
+      <button type="button" class="btn-sm" data-act="uRemTest">Tes</button>
     </div>
     <select id="uRemMode">
       <option value="off">Mati</option>
@@ -121,13 +137,19 @@
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-icon">📊</span><h3>Ringkasan 7 hari</h3></div>
+    <div class="card-head">
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+      <h3>Ringkasan 7 hari</h3>
+    </div>
     <div id="mingguan"></div>
-    <div class="btns mt8"><button class="btn-sm btn-outline" data-act="download">📥 Unduh ringkasan</button></div>
+    <div class="btns mt8"><button class="btn-sm btn-outline" data-act="download">Unduh ringkasan</button></div>
   </div>
 
   <div class="card">
-    <div class="card-head"><span class="card-icon">👤</span><h3>Akun</h3></div>
+    <div class="card-head">
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+      <h3>Akun</h3>
+    </div>
     <p class="sub mb0" id="akun"></p>
     <div class="btns mt8"><button class="btn-sm btn-outline btn-danger" data-act="logout">Keluar</button></div>
   </div>
@@ -135,17 +157,24 @@
 
 <!-- TAB: CATATAN -->
 <section id="catatan" class="tab">
-  <h2>📝 Catatan</h2>
+  <h2>Catatan</h2>
+  <p class="sub">Pantau asupan cairan dan frekuensi berkemih harianmu.</p>
   <div class="card">
-    <div class="card-head"><span class="card-icon">💧</span><h3>Catat minum</h3></div>
+    <div class="card-head">
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg></span>
+      <h3>Catat minum</h3>
+    </div>
     <div class="btns" id="quick"></div>
-    <div class="row g8 mt8"><input type="number" id="ml" placeholder="ml, mis. 350" min="1"><button class="btn" style="flex:0 0 auto" data-act="waterCustom">💾 Simpan</button></div>
-    <label class="f mt8">🎯 Target harian (ml)</label>
+    <div class="row g8 mt8"><input type="number" id="ml" placeholder="ml, mis. 350" min="1"><button class="btn" style="flex:0 0 auto" data-act="waterCustom">Simpan</button></div>
+    <label class="f mt8">Target harian (ml)</label>
     <input type="number" id="target" min="500" step="100">
     <p class="note">Jika dokter membatasi cairanmu, ikuti anjuran dokter.</p>
   </div>
   <div class="card">
-    <div class="card-head"><span class="card-icon">🔬</span><h3>Catat berkemih</h3></div>
+    <div class="card-head">
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3h6v4l4 8a4 4 0 01-3.5 6h-7A4 4 0 015 15l4-8V3z"/></svg></span>
+      <h3>Catat berkemih</h3>
+    </div>
     <label class="f">Warna urine</label>
     <div class="sw" id="warna"></div>
     <p class="note" id="warnaHint">Pilih warna urine yang paling sesuai.</p>
@@ -153,43 +182,46 @@
     <label class="ck"><input type="checkbox" class="kl" value="nyeri/panas"> Nyeri atau panas saat berkemih</label>
     <label class="ck"><input type="checkbox" class="kl" value="berbusa"> Urine berbusa</label>
     <label class="ck"><input type="checkbox" class="kl" value="bangun malam"> Bangun malam untuk berkemih</label>
-    <div class="btns mt8"><button class="btn" data-act="urine">💾 Simpan catatan</button></div>
+    <div class="btns mt8"><button class="btn" data-act="urine">Simpan catatan</button></div>
   </div>
   <div class="card">
-    <div class="card-head"><span class="card-icon">📋</span><h3>Riwayat hari ini</h3></div>
+    <div class="card-head">
+      <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span>
+      <h3>Riwayat hari ini</h3>
+    </div>
     <div id="riwayat"></div>
   </div>
 </section>
 
 <!-- TAB: EDUKASI -->
 <section id="edukasi" class="tab">
-  <h2>📚 Edukasi</h2>
+  <h2>Edukasi</h2>
   <p class="sub">Pelajari kesehatan ginjal & saluran kemih. Informasi umum, bukan pengganti pemeriksaan dokter.</p>
   <div class="seg" id="eduSeg">
-    <button data-act="eduMode" data-arg="video" aria-pressed="true">🎬 Animasi</button>
-    <button data-act="eduMode" data-arg="artikel" aria-pressed="false">📖 Materi (8)</button>
-    <button data-act="eduMode" data-arg="kuis" aria-pressed="false">🧠 Kuis</button>
+    <button data-act="eduMode" data-arg="video" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>Animasi</button>
+    <button data-act="eduMode" data-arg="artikel" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/></svg>Materi (8)</button>
+    <button data-act="eduMode" data-arg="kuis" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 116 0c0 2-3 2-3 4M12 17h.01"/></svg>Kuis</button>
   </div>
   <div id="eduBody"></div>
 </section>
 
 <!-- TAB: CEK KELUHAN -->
 <section id="keluhan" class="tab">
-  <h2>🩺 Cek Keluhan</h2>
+  <h2>Cek Keluhan</h2>
   <p class="sub">Pilih keluhan yang kamu alami. Hasilnya hanya saran tingkat urgensi, bukan diagnosis.</p>
   <div class="card" id="gejala"></div>
-  <div class="btns mt8"><button class="btn btn-full" data-act="check">🔍 Lihat saran</button></div>
+  <div class="btns mt8"><button class="btn btn-full" data-act="check">Lihat saran</button></div>
   <div class="card" id="hasil" style="display:none;margin-top:12px"></div>
 </section>
 
 <!-- TAB: AI CHAT -->
 <section id="ai" class="tab">
-  <h2>🤖 Tanya GeniCare</h2>
+  <h2>Tanya GeniCare</h2>
   <p class="sub">Asisten AI untuk pertanyaan seputar ginjal dan saluran kemih.</p>
   <div id="chat"></div>
   <div class="chat-input">
     <textarea id="q" rows="1" placeholder="Tulis pertanyaanmu..."></textarea>
-    <button class="btn-send" id="kirim" data-act="ask">
+    <button class="btn-send" id="kirim" data-act="ask" aria-label="Kirim">
       <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
     </button>
   </div>

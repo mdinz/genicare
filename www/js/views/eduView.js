@@ -79,9 +79,11 @@ ${charDoctor(44, 158)}
 </g></g></svg>`;
 
 const WARNA = ['#f6f1c9', '#f1e68a', '#e9cf3c', '#d9a521', '#b9741a', '#8a3b14'];
-const colors = hl => `<svg viewBox="0 0 260 190" role="img" aria-label="Skala warna urine">${WARNA.map((c, i) =>
-  `<rect class="tube${!hl.length || hl.includes(i) ? '' : ' off'}" x="${18 + i * 38}" y="22" width="30" height="114" rx="14" fill="${c}" stroke="#ffffff55" stroke-width="1.5" style="animation-delay:${i * .08}s"/>
-   <text class="lbl" x="${33 + i * 38}" y="158" text-anchor="middle">${i + 1}</text>`).join('')}</svg>`;
+const colors = hl => `<svg viewBox="0 0 270 200" role="img" aria-label="Skala warna urine">
+${charDoctor(38, 118)}
+<g transform="translate(36 8)">${WARNA.map((c, i) =>
+  `<rect class="tube${!hl.length || hl.includes(i) ? '' : ' off'}" x="${24 + i * 33}" y="18" width="25" height="106" rx="12" fill="${c}" stroke="#ffffff55" stroke-width="1.5" style="animation-delay:${i * .08}s"/>
+   <text class="lbl" x="${36.5 + i * 33}" y="144" text-anchor="middle">${i + 1}</text>`).join('')}</g></svg>`;
 
 const isk = () => `<svg viewBox="0 0 270 240" role="img" aria-label="Ilustrasi bakteri pada kandung kemih">
 ${charDoctor(42, 146)}
@@ -119,16 +121,18 @@ ${charDoctor(42, 146)}
 <text class="lbl" x="168" y="178">Sumbatan</text>
 </g></svg>`;
 
-const akickd = hl => `<svg viewBox="0 0 260 220" role="img" aria-label="Perbandingan AKI dan CKD">
-<rect x="16" y="24" width="106" height="152" rx="16" fill="${hl === 'aki' ? '#f43f5e33' : '#ffffff12'}" stroke="${hl === 'aki' ? '#fda4af' : '#ffffff33'}" stroke-width="2"/>
-<text class="lbl" x="69" y="50" text-anchor="middle">AKI (Akut)</text>
-<polyline points="30,86 56,86 72,144 106,148" fill="none" stroke="#fda4af" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-<text class="lbl" x="69" y="166" text-anchor="middle">Jam – Hari</text>
-<rect x="138" y="24" width="106" height="152" rx="16" fill="${hl === 'ckd' ? '#5eead433' : '#ffffff12'}" stroke="${hl === 'ckd' ? '#5eead4' : '#ffffff33'}" stroke-width="2"/>
-<text class="lbl" x="191" y="50" text-anchor="middle">CKD (Kronis)</text>
-<polyline points="152,82 178,96 202,116 228,142" fill="none" stroke="#5eead4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-<text class="lbl" x="191" y="166" text-anchor="middle">&gt; 3 Bulan</text>
-</svg>`;
+const akickd = hl => `<svg viewBox="0 0 270 220" role="img" aria-label="Perbandingan AKI dan CKD">
+${charDoctor(36, 138)}
+<g transform="translate(46 0)">
+<rect x="14" y="24" width="92" height="148" rx="14" fill="${hl === 'aki' ? '#f43f5e33' : '#ffffff12'}" stroke="${hl === 'aki' ? '#fda4af' : '#ffffff33'}" stroke-width="2"/>
+<text class="lbl" x="60" y="48" text-anchor="middle">AKI (Akut)</text>
+<polyline points="24,84 48,84 62,140 94,144" fill="none" stroke="#fda4af" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="lbl" x="60" y="162" text-anchor="middle">Jam – Hari</text>
+<rect x="116" y="24" width="92" height="148" rx="14" fill="${hl === 'ckd' ? '#5eead433' : '#ffffff12'}" stroke="${hl === 'ckd' ? '#5eead4' : '#ffffff33'}" stroke-width="2"/>
+<text class="lbl" x="162" y="48" text-anchor="middle">CKD (Kronis)</text>
+<polyline points="126,80 150,94 172,114 196,138" fill="none" stroke="#5eead4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="lbl" x="162" y="162" text-anchor="middle">&gt; 3 Bulan</text>
+</g></svg>`;
 
 const bph = hl => `<svg viewBox="0 0 270 240" role="img" aria-label="Ilustrasi BPH pembesaran prostat">
 ${charDoctor(42, 146)}
@@ -155,8 +159,8 @@ ${charDoctor(42, 140)}
 const ICON = {
   droplet: () => charDrink(),
   alert: () => charPain(),
-  clock: () => `<svg viewBox="0 0 240 230" aria-hidden="true"><circle class="ring" cx="120" cy="115" r="82"/><g class="ico" fill="none" stroke="#5eead4" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="115" r="54"/><path d="M120 82v36l24 14"/></g></svg>`,
-  shield: () => `<svg viewBox="0 0 240 230" aria-hidden="true"><circle class="ring" cx="120" cy="115" r="82"/><g class="ico" fill="none" stroke="#5eead4" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"><path d="M120 52l52 20v44c0 34-28 54-52 64-24-10-52-30-52-64V72z"/><path d="M96 118l18 18 32-36"/></g></svg>`
+  clock: () => `<svg viewBox="0 0 270 230" aria-hidden="true">${charDoctor(44, 144)}<g transform="translate(36 0)"><circle class="ring" cx="120" cy="115" r="76"/><g class="ico" fill="none" stroke="#5eead4" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="115" r="48"/><path d="M120 86v32l22 12"/></g></g></svg>`,
+  shield: () => `<svg viewBox="0 0 270 230" aria-hidden="true">${charDoctor(44, 144)}<g transform="translate(36 0)"><circle class="ring" cx="120" cy="115" r="76"/><g class="ico" fill="none" stroke="#5eead4" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"><path d="M120 58l46 18v38c0 30-24 48-46 58-22-10-46-28-46-58V76z"/><path d="M98 116l16 16 28-32"/></g></g></svg>`
 };
 const icon = n => (ICON[n] ? ICON[n]() : ICON.shield());
 const ART = { anatomy, colors, icon, isk, stone, hydro, akickd, bph, varikokel };
@@ -166,8 +170,12 @@ export function setMode(m) {
   $$('#eduSeg button').forEach(b => { const on = b.dataset.arg === m; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
 }
 
+const svgI = p => `<svg viewBox="0 0 24 24">${p}</svg>`;
+const PLAY_ICO = svgI('<circle cx="12" cy="12" r="9"/><polygon points="10 8.5 16 12 10 15.5 10 8.5" fill="currentColor" stroke="none"/>');
+const DOC_ICO = svgI('<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/>');
+
 export function renderVideoList(list) {
-  body().innerHTML = list.map(v => `<button class="item" data-act="eduOpen" data-arg="${v.id}"><div class="th">🎬</div><div><span class="tag">${v.tag || 'ANIMASI'}</span><b>${v.title}</b><span class="s">${v.desc} · ${v.src ? 'video' : v.scenes.length + ' adegan'}</span></div></button>`).join('')
+  body().innerHTML = list.map(v => `<button class="item" data-act="eduOpen" data-arg="${v.id}"><div class="th">${PLAY_ICO}</div><div><span class="tag">${v.tag || 'ANIMASI'}</span><b>${v.title}</b><span class="s">${v.desc} · ${v.src ? 'video' : v.scenes.length + ' adegan'}</span></div></button>`).join('')
     + '<p class="note">Animasi karakter & organ diputar langsung di aplikasi tanpa kuota tambahan.</p>';
 }
 
@@ -181,17 +189,17 @@ export function renderPlayer(v) {
           <div class="stage" id="stage"></div>
           <div class="reel-cap" id="rCap"><div class="reel-h" id="rHead"></div><p class="cap" id="cap" aria-live="polite"></p></div>
         </div>
-        <div class="ctl"><button class="btn-sm btn-outline" data-act="eduPrev" aria-label="Sebelumnya">‹</button><button class="btn" id="pp" data-act="eduPlay" style="min-width:104px"></button><button class="btn-sm btn-outline" data-act="eduNext" aria-label="Berikutnya">›</button><button class="btn-sm" id="eduSnd" data-act="eduSound">🔊 Musik</button></div>`)
-    + '<div class="btns" style="justify-content:center;margin-top:14px"><button class="btn-sm btn-outline" data-act="eduMode" data-arg="kuis">🧠 Uji pemahamanmu dengan kuis</button></div>';
+        <div class="ctl"><button class="btn-sm btn-outline" data-act="eduPrev" aria-label="Sebelumnya">‹</button><button class="btn" id="pp" data-act="eduPlay" style="min-width:104px"></button><button class="btn-sm btn-outline" data-act="eduNext" aria-label="Berikutnya">›</button><button class="btn-sm" id="eduSnd" data-act="eduSound">Musik: On</button></div>`)
+    + '<div class="btns" style="justify-content:center;margin-top:14px"><button class="btn-sm btn-outline" data-act="eduMode" data-arg="kuis">Uji pemahamanmu dengan kuis</button></div>';
 }
 
 export function setPlaying(p, end) {
-  const b = $('#pp'); if (b) b.textContent = p ? '⏸ Jeda' : end ? '↻ Ulangi' : '▶ Putar';
+  const b = $('#pp'); if (b) b.textContent = p ? 'Jeda' : end ? 'Ulangi' : 'Putar';
   const r = $('#reel'); if (r) r.classList.toggle('paused', !p);
 }
 
 export function setSoundLabel(on) {
-  const b = $('#eduSnd'); if (b) b.textContent = on ? '🔊 Musik: On' : '🔇 Musik: Off';
+  const b = $('#eduSnd'); if (b) b.textContent = on ? 'Musik: On' : 'Musik: Off';
 }
 
 export function showScene(v, i, playing) {
@@ -211,26 +219,26 @@ export function showScene(v, i, playing) {
 }
 
 export function renderArticleList(list) {
-  body().innerHTML = list.map(a => `<button class="item" data-act="eduOpen" data-arg="${a.id}"><div class="th">📖</div><div><span class="tag">MATERI ${a.num || ''}</span><b>${a.title}</b><span class="s">${a.desc} · ±${a.min} menit baca</span></div></button>`).join('');
+  body().innerHTML = list.map(a => `<button class="item" data-act="eduOpen" data-arg="${a.id}"><div class="th">${DOC_ICO}</div><div><span class="tag">MATERI ${a.num || ''}</span><b>${a.title}</b><span class="s">${a.desc} · ±${a.min} menit baca</span></div></button>`).join('');
 }
 
 export function renderArticle(a) {
   body().innerHTML = `<article class="art"><button class="lnk" data-act="eduBack">← Kembali</button><h3>${a.num ? a.num + '. ' : ''}${a.title}</h3><p class="note">±${a.min} menit baca</p><p class="lead">${fmtArt(a.intro)}</p>`
     + a.sections.map(s => `<h4>${s.h}</h4>${(s.p || []).map(t => `<p>${fmtArt(t)}</p>`).join('')}${s.ul ? `<ul>${s.ul.map(t => `<li>${fmtArt(t)}</li>`).join('')}</ul>` : ''}`).join('')
     + '<p class="note">Informasi ini bersifat umum dan bukan pengganti pemeriksaan oleh tenaga kesehatan.</p>'
-    + '<div class="btns mt8"><button class="btn-sm" data-act="eduMode" data-arg="kuis">🧠 Coba kuis</button><button class="btn-sm btn-outline" data-act="eduBack">Materi lain</button></div></article>';
+    + '<div class="btns mt8"><button class="btn-sm" data-act="eduMode" data-arg="kuis">Coba kuis</button><button class="btn-sm btn-outline" data-act="eduBack">Materi lain</button></div></article>';
 }
 
 // Kunci jawaban baru ditampilkan setelah tombol kirim ditekan.
 export function renderQuiz(qs) {
-  body().innerHTML = '<div class="card"><div class="card-head"><span class="card-icon">🧠</span><h3>Kuis singkat</h3></div><p class="note" style="margin-top:0">Jawab semua pertanyaan, lalu tekan Kirim. Penjelasan baru muncul setelah kamu mengirim.</p>'
+  body().innerHTML = '<div class="card"><div class="card-head"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 116 0c0 2-3 2-3 4M12 17h.01"/></svg></span><h3>Kuis singkat</h3></div><p class="note" style="margin-top:0">Jawab semua pertanyaan, lalu tekan Kirim. Penjelasan baru muncul setelah kamu mengirim.</p>'
     + qs.map((k, i) => `<p style="margin:14px 0 4px;font-size:14.5px;font-weight:700">${i + 1}. ${k.q}</p><label class="ck"><input type="radio" name="k${i}" value="1"> Benar</label><label class="ck"><input type="radio" name="k${i}" value="0"> Salah</label><p class="note" id="e${i}"></p>`).join('')
     + '<div class="btns mt8"><button class="btn btn-full" data-act="quizSubmit">Kirim jawaban</button></div><p class="note" id="skor"></p></div>';
 }
 export const readAnswers = n => Array.from({ length: n }, (_, i) => { const v = document.querySelector(`input[name=k${i}]:checked`); return v ? v.value : null; });
 export function showResult(r) {
-  r.items.forEach((x, i) => { $('#e' + i).textContent = (x.skipped ? 'Belum dijawab. ' : x.ok ? '✅ Benar. ' : '❌ Kurang tepat. ') + x.note; });
-  $('#skor').textContent = `🏆 Skor: ${r.score} dari ${r.total}`;
+  r.items.forEach((x, i) => { $('#e' + i).textContent = (x.skipped ? 'Belum dijawab. ' : x.ok ? 'Benar. ' : 'Kurang tepat. ') + x.note; });
+  $('#skor').textContent = `Skor: ${r.score} dari ${r.total}`;
   const o = $('#qa'); if (o) o.remove();
   $('#skor').insertAdjacentHTML('afterend', '<div class="btns mt8" id="qa"><button class="btn-sm" data-act="quizReset">Ulangi kuis</button><button class="btn-sm btn-outline" data-act="eduMode" data-arg="artikel">Baca materi</button></div>');
 }

@@ -29,20 +29,20 @@
 </style>
 </head>
 <body>
-  <h1>🎬 GeniCare — Video Demo 9:16</h1>
+  <h1>GeniCare — Video Demo 9:16</h1>
   <p class="sub">Animasi motion-graphics vertikal siap upload TikTok/Reels lengkap dengan musik & efek suara.</p>
   <div class="stage-wrap">
     <canvas id="cv" width="720" height="1280"></canvas>
     <div class="audio-gate" id="gate">
       <button class="play-big" type="button" aria-label="Putar dengan suara">▶</button>
-      <span class="gate-txt">🔊 Klik untuk Putar + Suara</span>
+      <span class="gate-txt">Klik untuk Putar + Suara</span>
     </div>
   </div>
   <div class="ctl">
     <button class="p" id="playBtn">Putar / Jeda</button>
     <button class="o" id="repBtn">Ulangi</button>
-    <button class="o" id="muteBtn">🔊 Suara: Nyala</button>
-    <button class="rec" id="recBtn">⏺ Rekam & Unduh (.webm)</button>
+    <button class="o" id="muteBtn">Suara: Nyala</button>
+    <button class="rec" id="recBtn">Rekam & Unduh (.webm)</button>
     <a class="btn o" href="index.html">← Buka Aplikasi</a>
   </div>
   <p class="status" id="st">Klik tombol ▶ di video untuk memutar dengan musik & SFX</p>
@@ -225,14 +225,14 @@ function drawScene() {
     const p2 = easeOut(seg(0.4, 1.0));
     ctx.save(); ctx.globalAlpha = p2;
     rr(90, 680 + (1 - p2) * 30, 540, 62, 18, '#dc2626');
-    txt('⚠️ JANGAN TAHAN KENCING!', W / 2, 711 + (1 - p2) * 30, 30, '#fff', 'center', '800');
+    txt('JANGAN TAHAN KENCING!', W / 2, 711 + (1 - p2) * 30, 30, '#fff', 'center', '800');
     txt('Bisa picu ISK, Batu Ginjal & Hidronefrosis!', W / 2, 810, 34, '#5eead4', 'center', '800', 580);
     ctx.restore();
   } else if (scIdx === 1) {
     // SCENE 2: INTRO + HYDRATION (4.5 - 10s)
     const p = easeOut(seg(4.5, 5.2));
     txt('SOLUSINYA:', W / 2, 145, 22, '#99f6e4', 'center', '800');
-    txt('GeniCare 💧', W / 2, 198, 52, '#fff', 'center', '800');
+    txt('GeniCare', W / 2, 198, 52, '#fff', 'center', '800');
     const py = 270 + (1 - p) * 140;
     drawPhone(140, py, 440, 820, 'Beranda GeniCare', (ix, iy, iw) => {
       const fillPct = Math.min(1, seg(5.5, 8.5));
@@ -276,7 +276,7 @@ function drawScene() {
       if (notif > 0) {
         ctx.save(); ctx.globalAlpha = notif;
         rr(ix, iy + 235, iw, 120, 20, '#0f172a');
-        txt('🔔 GeniCare · Berkemih', ix + 20, iy + 275, 19, '#5eead4', 'left', '800');
+        txt('GeniCare · Pengingat Berkemih', ix + 20, iy + 275, 19, '#5eead4', 'left', '800');
         txt('Waktunya buang air kecil, jangan ditahan!', ix + 20, iy + 314, 16, '#fff', 'left', '700', iw - 40);
         ctx.restore();
       }
@@ -287,6 +287,7 @@ function drawScene() {
       const act = Math.floor((t - 10) * 1.4) % 6;
       cols.forEach((c, i) => rr(ix + 18 + i * 58, iy + (i === act ? 442 : 458), 46, i === act ? 96 : 80, 10, c, i === act ? '#0f172a' : '#0002', i === act ? 3 : 1));
     });
+    drawPerson(92, 1080, 'doctor', 1.25);
   } else if (scIdx === 3) {
     // SCENE 4: 8 MATERI + ANIMASI TIKTOK (16.5 - 22.5s)
     txt('EDUKASI LENGKAP', W / 2, 155, 24, '#5eead4', 'center', '800');
@@ -297,12 +298,13 @@ function drawScene() {
         const rv = easeOut(seg(16.6 + i * 0.35, 17.1 + i * 0.35));
         ctx.save(); ctx.globalAlpha = rv;
         rr(ix + (1 - rv) * 40, iy + i * 68, iw, 58, 14, '#fff', '#e2e8f0');
-        rr(ix + 12 + (1 - rv) * 40, iy + i * 68 + 11, 36, 36, 10, '#f0fdfa');
-        txt('📘', ix + 30 + (1 - rv) * 40, iy + i * 68 + 30, 18);
-        txt(item, ix + 60 + (1 - rv) * 40, iy + i * 68 + 30, 17, '#0f172a', 'left', '800');
+        rr(ix + 12 + (1 - rv) * 40, iy + i * 68 + 11, 36, 36, 10, '#0d9488');
+        txt(String(i + 1), ix + 30 + (1 - rv) * 40, iy + i * 68 + 30, 16, '#fff', 'center', '800');
+        txt(item.replace(/^\d+\.\s*/, ''), ix + 60 + (1 - rv) * 40, iy + i * 68 + 30, 17, '#0f172a', 'left', '800');
         ctx.restore();
       });
     });
+    drawPerson(92, 1080, 'doctor', 1.25);
   } else if (scIdx === 4) {
     // SCENE 5: CEK KELUHAN & TANYA AI (22.5 - 27.5s)
     txt('CEK KELUHAN & TANYA AI', W / 2, 155, 24, '#5eead4', 'center', '800');
@@ -325,14 +327,17 @@ function drawScene() {
   } else {
     // SCENE 6: OUTRO CTA (27.5 - 32s)
     const p = easeBack(seg(27.5, 28.2));
-    ctx.save(); ctx.translate(W / 2, 620); ctx.scale(p, p);
-    rr(-230, -220, 460, 440, 40, '#0f4c46', '#5eead4', 3);
-    txt('💧', 0, -125, 76);
+    ctx.save(); ctx.translate(W / 2, 600); ctx.scale(p, p);
+    rr(-230, -210, 460, 420, 40, '#0f4c46', '#5eead4', 3);
+    // Drawn water droplet icon
+    ctx.fillStyle = '#5eead4';
+    ctx.beginPath(); ctx.moveTo(0, -165); ctx.bezierCurveTo(36, -120, 36, -90, 0, -90); ctx.bezierCurveTo(-36, -90, -36, -120, 0, -165); ctx.fill();
     txt('GeniCare', 0, -35, 52, '#fff', 'center', '800');
     txt('Kenali · Pantau · Jaga Kesehatanmu', 0, 35, 22, '#99f6e4', 'center', '700', 380);
     rr(-170, 100, 340, 68, 34, '#2dd4bf');
     txt('Coba Sekarang Gratis!', 0, 134, 24, '#042f2e', 'center', '800');
     ctx.restore();
+    drawPerson(92, 1080, 'doctor', 1.25);
   }
 }
 
@@ -464,7 +469,7 @@ document.getElementById('playBtn').onclick = () => {
 document.getElementById('repBtn').onclick = () => { t = 0; lastScene = -1; unlockAndPlay(); };
 document.getElementById('muteBtn').onclick = e => {
   muted = !muted;
-  e.target.textContent = muted ? '🔇 Suara: Mati' : '🔊 Suara: Nyala';
+  e.target.textContent = muted ? 'Suara: Mati' : 'Suara: Nyala';
   if (!muted && playing) startAudio();
 };
 document.getElementById('recBtn').onclick = () => { if (!recording) startRecording(); };
