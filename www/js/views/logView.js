@@ -68,6 +68,8 @@ export function toggleProf(open) {
   if (m) m.hidden = !open;
 }
 
+const CHECK_ICO = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--g)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px" aria-label="Target tercapai"><polyline points="20 6 9 17 4 12"/></svg>';
+
 export function render(d) {
   const j = new Date().getHours(), sp = j < 11 ? 'Selamat pagi' : j < 15 ? 'Selamat siang' : j < 19 ? 'Selamat sore' : 'Selamat malam';
   $('#sapa').textContent = sp + (d.nama ? ', ' + d.nama.split(' ')[0] : '') + '!';
@@ -82,7 +84,7 @@ export function render(d) {
     : '<p class="note">Belum ada catatan hari ini. Mulai dengan mencatat segelas air.</p>';
   $('#mingguan').innerHTML = d.week.map(w => {
     const wp = Math.min(100, Math.round((w.ml / tgt) * 100));
-    return `<div class="wrow"><div class="log" style="border:0;padding:4px 0"><span><strong>${w.d}</strong></span><span>${w.ml} ml · ${w.n}x berkemih${w.ok ? ' ✓' : ''}</span></div><div class="wbar"><i style="width:${wp}%"></i></div></div>`;
+    return `<div class="wrow"><div class="log" style="border:0;padding:4px 0"><span><strong>${w.d}</strong></span><span>${w.ml} ml · ${w.n}x berkemih${w.ok ? CHECK_ICO : ''}</span></div><div class="wbar"><i style="width:${wp}%"></i></div></div>`;
   }).join('');
   $('#akun').textContent = d.account;
 }

@@ -9,25 +9,34 @@ const reduced = () => window.matchMedia && matchMedia('(prefers-reduced-motion: 
 const vid = () => VIDEOS.find(v => v.id === cur);
 
 function stopMusic() { clearInterval(musicTimer); musicTimer = null; }
+function playTone(freq, dur, type, vol) {
+  if (!ac || !soundOn) return;
+  const now = ac.currentTime;
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.001, now);
+  g.gain.linearRampToValueAtTime(vol, now + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+  o.connect(g); g.connect(ac.destination);
+  o.start(now); o.stop(now + dur + 0.02);
+}
 function startMusic() {
   stopMusic();
   if (!soundOn || !playing) return;
   try {
     if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === 'suspended') ac.resume();
-    const notes = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 783.99, 880.0];
+    const chords = [[261.63, 329.63, 392], [392, 493.88, 587.33], [220, 261.63, 329.63], [174.61, 220, 261.63]];
+    const melody = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 783.99, 880.0];
+    const bass = [130.81, 196.0, 110.0, 174.61];
     musicTimer = setInterval(() => {
       if (!soundOn || !playing || !ac) return;
-      const now = ac.currentTime;
-      const o = ac.createOscillator(), g = ac.createGain();
-      o.type = 'sine';
-      o.frequency.value = notes[step % notes.length];
-      g.gain.setValueAtTime(0.08, now);
-      g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-      o.connect(g); g.connect(ac.destination);
-      o.start(now); o.stop(now + 0.36);
+      const bar = Math.floor(step / 8) % 4;
+      playTone(melody[step % melody.length], 0.28, 'triangle', 0.09);
+      if (step % 2 === 0) playTone(bass[bar] * 0.5, 0.3, 'sine', 0.11);
+      if (step % 4 === 0) chords[bar].forEach(f => playTone(f, 0.7, 'sine', 0.035));
       step++;
-    }, 340);
+    }, 300);
   } catch {}
 }
 

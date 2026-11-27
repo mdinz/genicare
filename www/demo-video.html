@@ -8,66 +8,87 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#061312;--card:#0e2422;--teal:#2dd4bf;--ink:#f0fdfa;--mute:#86b6b0}
+  :root{--bg:#041412;--card:#0d2220;--teal:#2dd4bf;--ink:#f0fdfa;--mute:#86b6b0}
   *{box-sizing:border-box;margin:0}
-  body{font-family:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:18px 14px 36px;gap:12px}
-  h1{font-size:20px;font-weight:800;text-align:center}
-  .sub{font-size:13px;color:var(--mute);text-align:center;max-width:440px}
-  .stage-wrap{position:relative;width:100%;max-width:340px;aspect-ratio:9/16;border-radius:24px;overflow:hidden;box-shadow:0 24px 60px #000a;border:2px solid #2dd4bf44;background:#071b19}
+  body{font-family:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 32px;gap:10px}
+  h1{font-size:19px;font-weight:800;text-align:center;background:linear-gradient(90deg,#5eead4,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{font-size:12.5px;color:var(--mute);text-align:center;max-width:420px;line-height:1.5}
+  .stage-wrap{position:relative;width:100%;max-width:320px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;box-shadow:0 20px 56px #000b,0 0 0 2px #2dd4bf33;background:#050f0e}
   canvas{width:100%;height:100%;display:block}
-  .audio-gate{position:absolute;inset:0;background:rgba(4,18,17,.72);backdrop-filter:blur(6px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;z-index:5;transition:opacity .25s}
+  .audio-gate{position:absolute;inset:0;background:rgba(2,14,13,.78);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;z-index:5;transition:opacity .3s}
   .audio-gate.off{opacity:0;pointer-events:none}
-  .play-big{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#0d9488,#2dd4bf);color:#042f2e;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 0 32px #2dd4bf66;border:0}
-  .gate-txt{font-size:14px;font-weight:800;color:#fff;background:#00000066;padding:6px 14px;border-radius:99px}
-  .ctl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:420px}
-  button,a.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:10px 14px;cursor:pointer;text-decoration:none;font-size:13px;transition:transform .1s}
-  button:active,a.btn:active{transform:scale(.97)}
-  .p{background:linear-gradient(135deg,#0d9488,#2dd4bf);color:#042f2e}
-  .o{background:var(--card);color:var(--ink);border:1px solid #ffffff24}
-  .rec{background:linear-gradient(135deg,#e11d48,#fb7185);color:#fff}
-  .status{font-size:12.5px;color:var(--teal);min-height:18px;text-align:center;font-weight:600}
+  .play-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#0d9488,#5eead4);color:#041412;display:flex;align-items:center;justify-content:center;border:0;box-shadow:0 0 40px #2dd4bf55;animation:gate-pulse 2s ease-in-out infinite alternate}
+  @keyframes gate-pulse{from{box-shadow:0 0 24px #2dd4bf44}to{box-shadow:0 0 56px #2dd4bfaa,0 0 80px #2dd4bf44}}
+  .play-big svg{width:36px;height:36px}
+  .gate-txt{font-size:13.5px;font-weight:800;color:#fff;background:#00000077;padding:7px 18px;border-radius:99px;letter-spacing:.2px}
+  .ctl{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;width:100%;max-width:400px}
+  button,a.btn{font:inherit;font-weight:700;border:0;border-radius:11px;padding:9px 13px;cursor:pointer;font-size:12.5px;transition:transform .12s,opacity .12s;line-height:1.3}
+  button:active,a.btn:active{transform:scale(.96)}
+  .p{background:linear-gradient(135deg,#0d9488,#2dd4bf);color:#041412}
+  .o{background:var(--card);color:var(--ink);border:1px solid #ffffff20}
+  .rec{background:linear-gradient(135deg,#be123c,#f43f5e);color:#fff}
+  .status{font-size:12px;color:var(--teal);min-height:17px;text-align:center;font-weight:700;letter-spacing:.1px}
 </style>
 </head>
 <body>
   <h1>GeniCare — Video Demo 9:16</h1>
-  <p class="sub">Animasi motion-graphics vertikal siap upload TikTok/Reels lengkap dengan musik & efek suara.</p>
+  <p class="sub">Animasi TikTok-style vertikal dengan karakter Dzaky &amp; Dr. Hana, musik beat, dan SFX.</p>
   <div class="stage-wrap">
     <canvas id="cv" width="720" height="1280"></canvas>
     <div class="audio-gate" id="gate">
-      <button class="play-big" type="button" aria-label="Putar dengan suara">▶</button>
-      <span class="gate-txt">Klik untuk Putar + Suara</span>
+      <button class="play-big" type="button" aria-label="Putar dengan suara">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <span class="gate-txt">Ketuk untuk Putar + Musik</span>
     </div>
   </div>
   <div class="ctl">
-    <button class="p" id="playBtn">Putar / Jeda</button>
-    <button class="o" id="repBtn">Ulangi</button>
+    <button class="p" id="playBtn">▶ Putar / Jeda</button>
+    <button class="o" id="repBtn">↺ Ulangi</button>
     <button class="o" id="muteBtn">Suara: Nyala</button>
-    <button class="rec" id="recBtn">Rekam & Unduh (.webm)</button>
+    <button class="rec" id="recBtn">⏺ Rekam &amp; Unduh (.webm)</button>
     <a class="btn o" href="index.html">← Buka Aplikasi</a>
   </div>
-  <p class="status" id="st">Klik tombol ▶ di video untuk memutar dengan musik & SFX</p>
+  <p class="status" id="st">Ketuk tombol ▶ di video untuk mulai dengan musik &amp; SFX</p>
 
 <script>
-const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
-const W = 720, H = 1280, DUR = 32;
+/* ═══════════════════════════════════════════════════════════════
+   GeniCare Demo Video 9:16 — Full Animation Engine
+   Karakter: Dzaky (teal shirt) & Dr. Hana (white coat)
+   Scenes: 6 scenes × ~5.5 detik = 33 detik total
+   ═══════════════════════════════════════════════════════════════ */
+
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const W = 720, H = 1280, DUR = 33;
 let t = 0, playing = false, last = performance.now(), muted = false, recording = false;
 let lastScene = -1;
 
-const easeOut = x => 1 - Math.pow(1 - Math.max(0, Math.min(1, x)), 3);
-const easeBack = x => {
-  const c1 = 1.70158, c3 = c1 + 1;
-  const k = Math.max(0, Math.min(1, x));
-  return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2);
-};
+/* ── Easing ── */
+const easeOut  = x => 1 - Math.pow(Math.max(0, Math.min(1, 1 - x)), 3);
+const easeBack = x => { const c1=1.70158, c3=c1+1, k=Math.max(0,Math.min(1,x)); return 1+c3*Math.pow(k-1,3)+c1*Math.pow(k-1,2); };
+const easeIn   = x => Math.pow(Math.max(0, Math.min(1, x)), 2);
 const seg = (s, e) => Math.max(0, Math.min(1, (t - s) / (e - s)));
+const lerp = (a, b, k) => a + (b - a) * k;
 
+/* ── Beat timing ── */
+const BPM = 108, BEAT = 60 / BPM;
+const beat = () => Math.abs(Math.sin(t * Math.PI / BEAT));
+
+/* ── Draw helpers ── */
 function rr(x, y, w, h, r, fill, stroke, lw = 2) {
   ctx.beginPath(); ctx.roundRect(x, y, w, h, r);
   if (fill) { ctx.fillStyle = fill; ctx.fill(); }
   if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke(); }
 }
 
-function txt(str, x, y, size = 32, color = '#fff', align = 'center', weight = '800', maxW = 640) {
+function shadow(blur = 20, color = 'rgba(0,0,0,0.5)', ox = 0, oy = 8) {
+  ctx.shadowBlur = blur; ctx.shadowColor = color; ctx.shadowOffsetX = ox; ctx.shadowOffsetY = oy;
+}
+function noShadow() { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0; }
+
+function txt(str, x, y, size=32, color='#fff', align='center', weight='800', maxW=660) {
+  ctx.save();
   ctx.fillStyle = color;
   ctx.font = `${weight} ${size}px "Plus Jakarta Sans","Segoe UI",sans-serif`;
   ctx.textAlign = align; ctx.textBaseline = 'middle';
@@ -78,270 +99,664 @@ function txt(str, x, y, size = 32, color = '#fff', align = 'center', weight = '8
     if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; } else cur = test;
   }
   if (cur) lines.push(cur);
-  const lh = size * 1.24;
+  const lh = size * 1.28;
   lines.forEach((l, i) => ctx.fillText(l, x, y + (i - (lines.length - 1) / 2) * lh));
+  ctx.restore();
 }
 
-function drawPerson(cx, cy, mode = 'doctor', sc = 1) {
+function txtStroke(str, x, y, size, color, strokeColor, align='center', maxW=660) {
+  ctx.save();
+  ctx.font = `800 ${size}px "Plus Jakarta Sans","Segoe UI",sans-serif`;
+  ctx.textAlign = align; ctx.textBaseline = 'middle';
+  ctx.strokeStyle = strokeColor; ctx.lineWidth = size * 0.12;
+  ctx.lineJoin = 'round';
+  ctx.strokeText(str, x, y);
+  ctx.fillStyle = color; ctx.fillText(str, x, y);
+  ctx.restore();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   KARAKTER — Dzaky & Dr. Hana
+   ═══════════════════════════════════════════════════════════════ */
+
+/**
+ * Gambar karakter manusia animasi gaya 2D flat.
+ * @param {number} cx   center-x
+ * @param {number} cy   bottom-y (kaki)
+ * @param {string} role 'dzaky'|'doctor'|'pain'|'drink'
+ * @param {number} sc   scale
+ * @param {number} flip -1 untuk mirror
+ */
+function drawChar(cx, cy, role='dzaky', sc=1, flip=1) {
   ctx.save();
   ctx.translate(cx, cy);
-  ctx.scale(sc, sc);
-  const bob = Math.sin(t * 5) * 4;
-  ctx.translate(0, bob);
-  // Shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.28)';
-  ctx.beginPath(); ctx.ellipse(0, 96, 36, 9, 0, 0, Math.PI * 2); ctx.fill();
-  // Body
-  ctx.fillStyle = mode === 'doctor' ? '#ffffff' : mode === 'pain' ? '#f43f5e' : '#14b8a6';
-  ctx.beginPath(); ctx.roundRect(-30, 18, 60, 74, [26, 26, 10, 10]); ctx.fill();
-  if (mode === 'doctor') {
-    ctx.strokeStyle = '#0d9488'; ctx.lineWidth = 4;
-    ctx.beginPath(); ctx.arc(0, 24, 16, 0, Math.PI); ctx.stroke();
-  }
-  // Head
-  ctx.fillStyle = '#fbd3b6';
-  ctx.beginPath(); ctx.arc(0, -10, 28, 0, Math.PI * 2); ctx.fill();
-  // Hair
-  ctx.fillStyle = '#1e293b';
-  ctx.beginPath(); ctx.arc(0, -18, 28, Math.PI, Math.PI * 2); ctx.fill();
-  // Eyes & Mouth
-  ctx.fillStyle = '#1e293b';
-  if (mode === 'pain') {
-    ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(-14, -14); ctx.lineTo(-6, -10); ctx.moveTo(14, -14); ctx.lineTo(6, -10); ctx.stroke();
-    ctx.fillStyle = '#be123c'; ctx.beginPath(); ctx.arc(0, 2, 5, 0, Math.PI * 2); ctx.fill();
-    // Sweat drop
-    ctx.fillStyle = '#38bdf8'; ctx.beginPath(); ctx.arc(24, -22 + (t * 20 % 12), 4, 0, Math.PI * 2); ctx.fill();
+  ctx.scale(flip * sc, sc);
+
+  const bob   = Math.sin(t * 5.2) * 3.5;      // naik-turun
+  const sway  = Math.sin(t * 2.6) * 1.8;      // goyang kiri-kanan
+  const wave  = Math.sin(t * 7.4);             // tangan melambai
+  const blink = (Math.sin(t * 3.1) > 0.92) ? 0.3 : 1; // kedip
+
+  ctx.translate(sway, bob);
+
+  /* Bayangan tanah */
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.22)';
+  ctx.beginPath(); ctx.ellipse(0, 2, 32*sc, 7*sc, 0, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  /* ── Sepatu ── */
+  const shoeCol = role==='doctor' ? '#1e293b' : '#0f172a';
+  [-13, 13].forEach(sx => {
+    ctx.fillStyle = shoeCol;
+    ctx.beginPath(); ctx.ellipse(sx, 0, 12, 7, sx>0?0.1:-0.1, 0, Math.PI*2); ctx.fill();
+  });
+
+  /* ── Celana / rok bawah ── */
+  const pantsCol = role==='doctor' ? '#1e3a5f' : '#0d3346';
+  ctx.fillStyle = pantsCol;
+  rr(-22, -60, 44, 62, [0,0,8,8], pantsCol);
+  /* garis tengah celana */
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0,-58); ctx.lineTo(0,-2); ctx.stroke();
+
+  /* ── Badan / Baju ── */
+  const bodyCol = role==='doctor' ? '#ffffff'
+                : role==='pain'   ? '#f43f5e'
+                : role==='drink'  ? '#06b6d4'
+                :                   '#14b8a6';
+  rr(-28, -130, 56, 76, [14,14,2,2], bodyCol);
+
+  if (role==='doctor') {
+    /* Jas putih detail: kerah + kancing */
+    ctx.fillStyle = '#e2e8f0';
+    ctx.beginPath();
+    ctx.moveTo(-28,-130); ctx.lineTo(-16,-130); ctx.lineTo(0,-108); ctx.lineTo(16,-130); ctx.lineTo(28,-130);
+    ctx.lineTo(28,-96); ctx.lineTo(-28,-96); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#0d9488';
+    ctx.beginPath(); ctx.arc(0,-118,16,0,Math.PI); ctx.fill(); /* kerah teal */
+    [0,-4,-8].forEach(ky => { ctx.fillStyle='#94a3b8'; ctx.beginPath(); ctx.arc(0,-114+ky*2.5,2.5,0,Math.PI*2); ctx.fill(); });
+    /* stetoskop */
+    ctx.strokeStyle='#64748b'; ctx.lineWidth=3; ctx.lineCap='round';
+    ctx.beginPath(); ctx.arc(0,-114,10,0.1*Math.PI,0.9*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-10,-114+10); ctx.lineTo(-10,-96); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(10,-114+10); ctx.lineTo(10,-96); ctx.stroke();
+    ctx.fillStyle='#64748b'; ctx.beginPath(); ctx.arc(0,-96,5,0,Math.PI*2); ctx.fill();
   } else {
-    ctx.beginPath(); ctx.arc(-9, -10, 3.2, 0, Math.PI * 2); ctx.arc(9, -10, 3.2, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#be123c'; ctx.lineWidth = 3; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.arc(0, -2, 8, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+    /* Stripe / logo kaos */
+    ctx.strokeStyle='rgba(255,255,255,0.3)'; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(-16,-120); ctx.lineTo(16,-120); ctx.stroke();
   }
-  // Animated Arm
-  const wave = Math.sin(t * 7) * 0.25;
+
+  /* ── Leher ── */
+  ctx.fillStyle='#f4c8a0';
+  rr(-8,-148,16,22,[4,4,0,0],'#f4c8a0');
+
+  /* ── Kepala ── */
+  ctx.save(); ctx.translate(0, -172);
+  /* rambut belakang */
+  ctx.fillStyle = role==='doctor' ? '#4a1942' : '#1e293b';
+  ctx.beginPath(); ctx.arc(0, 0, 32, 0, Math.PI*2); ctx.fill();
+
+  /* wajah */
+  ctx.fillStyle='#f9d5b3';
+  ctx.beginPath(); ctx.arc(0, 4, 29, 0, Math.PI*2); ctx.fill();
+
+  /* rambut depan */
+  ctx.fillStyle = role==='doctor' ? '#4a1942' : '#1e293b';
+  if (role==='doctor') {
+    /* rambut panjang dokter wanita */
+    ctx.beginPath(); ctx.moveTo(-29,-6); ctx.quadraticCurveTo(-36,-2,-34,22); ctx.quadraticCurveTo(-30,30,-20,32); ctx.lineTo(-18,8); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(29,-6); ctx.quadraticCurveTo(36,-2,34,22); ctx.quadraticCurveTo(30,30,20,32); ctx.lineTo(18,8); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.arc(0,-12,32,Math.PI,Math.PI*2); ctx.fill();
+    /* jepit rambut */
+    ctx.fillStyle='#f43f5e';
+    ctx.beginPath(); ctx.arc(-18,-12,5,0,Math.PI*2); ctx.fill();
+  } else {
+    /* rambut laki-laki Dzaky */
+    ctx.beginPath(); ctx.arc(0,-12,32,Math.PI,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-29,-10); ctx.quadraticCurveTo(-24,-24,-14,-26); ctx.quadraticCurveTo(0,-30,14,-26); ctx.quadraticCurveTo(24,-24,29,-10); ctx.lineTo(29,2); ctx.lineTo(-29,2); ctx.closePath(); ctx.fill();
+  }
+
+  /* ── Mata ── */
+  ctx.fillStyle='white';
+  ctx.beginPath(); ctx.ellipse(-10, 4, 7.5, 7.5*blink, 0, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(10, 4, 7.5, 7.5*blink, 0, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = role==='doctor' ? '#5b2d8e' : '#1e293b';
+  ctx.beginPath(); ctx.arc(-10, 4, 4.5, 0, Math.PI*2); ctx.arc(10, 4, 4.5, 0, Math.PI*2); ctx.fill();
+  /* kilat mata */
+  ctx.fillStyle='white';
+  ctx.beginPath(); ctx.arc(-8,2,1.8,0,Math.PI*2); ctx.arc(12,2,1.8,0,Math.PI*2); ctx.fill();
+
+  /* ── Alis ── */
+  ctx.strokeStyle='#5c3a1a'; ctx.lineWidth=3; ctx.lineCap='round';
+  if (role==='pain') {
+    ctx.beginPath(); ctx.moveTo(-16,-6); ctx.lineTo(-6,-2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(16,-6); ctx.lineTo(6,-2); ctx.stroke();
+  } else {
+    ctx.beginPath(); ctx.moveTo(-17,-4); ctx.quadraticCurveTo(-10,-10,-3,-4); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(17,-4); ctx.quadraticCurveTo(10,-10,3,-4); ctx.stroke();
+  }
+
+  /* ── Hidung ── */
+  ctx.fillStyle='rgba(0,0,0,0.1)';
+  ctx.beginPath(); ctx.ellipse(0,10,3.5,2.5,0,0,Math.PI*2); ctx.fill();
+
+  /* ── Mulut ── */
+  ctx.strokeStyle = role==='pain' ? '#dc2626' : '#c0392b'; ctx.lineWidth=3; ctx.lineCap='round';
+  ctx.beginPath();
+  if (role==='pain') {
+    ctx.arc(0, 22, 9, 0.2*Math.PI, 0.8*Math.PI, true);
+  } else if (role==='drink') {
+    ctx.arc(0, 18, 11, 0.1*Math.PI, 0.9*Math.PI);
+  } else {
+    ctx.arc(0, 19, 10, 0.1*Math.PI, 0.9*Math.PI);
+  }
+  ctx.stroke();
+  /* Blush pipi */
+  ctx.fillStyle='rgba(255,100,100,0.18)';
+  ctx.beginPath(); ctx.ellipse(-18,14,10,6,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(18,14,10,6,0,0,Math.PI*2); ctx.fill();
+
+  ctx.restore(); /* kepala */
+
+  /* ── Tangan kiri (bergerak) ── */
   ctx.save();
-  ctx.translate(28, 34);
-  ctx.rotate(mode === 'drink' ? -0.9 + wave * 0.4 : -0.4 + wave);
-  ctx.strokeStyle = mode === 'doctor' ? '#ffffff' : '#fbd3b6';
-  ctx.lineWidth = 12; ctx.lineCap = 'round';
-  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(28, -14); ctx.stroke();
-  if (mode === 'drink') {
-    ctx.fillStyle = '#bae6fd'; ctx.fillRect(22, -32, 18, 24);
-    ctx.fillStyle = '#38bdf8'; ctx.fillRect(24, -20, 14, 10);
+  ctx.translate(-28, -110);
+  const armL = role==='pain' ? -0.3 + Math.sin(t*5)*0.15 : -0.6 + wave * 0.22;
+  ctx.rotate(armL);
+  ctx.strokeStyle = bodyCol; ctx.lineWidth = 14; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-6,36); ctx.stroke();
+  /* Telapak */
+  ctx.fillStyle='#f9d5b3';
+  ctx.beginPath(); ctx.ellipse(-8,40,10,8,armL+0.3,0,Math.PI*2); ctx.fill();
+  if (role==='drink') {
+    /* Gelas minum */
+    ctx.fillStyle='#bae6fd'; rr(-26,28,22,32,6,'#bae6fd');
+    ctx.fillStyle='#38bdf8'; rr(-24,38,18,14,4,'#38bdf8');
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(-26,34); ctx.lineTo(-4,34); ctx.stroke();
   }
   ctx.restore();
+
+  /* ── Tangan kanan (melambai/stethoscope) ── */
+  ctx.save();
+  ctx.translate(28, -110);
+  const armR = role==='doctor' ? 0.4 + wave*0.18 : 0.5 + wave*0.25;
+  ctx.rotate(armR);
+  ctx.strokeStyle = bodyCol; ctx.lineWidth = 14; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(6,36); ctx.stroke();
+  ctx.fillStyle='#f9d5b3';
+  ctx.beginPath(); ctx.ellipse(8,40,10,8,armR-0.3,0,Math.PI*2); ctx.fill();
+  if (role==='doctor') {
+    /* Clipboard dokter */
+    ctx.save(); ctx.rotate(-armR+0.1);
+    rr(2,24,34,46,6,'#f1f5f9','#cbd5e1',2);
+    rr(10,28,18,8,3,'#0d9488');
+    ctx.fillStyle='#64748b'; ctx.lineWidth=1.5;
+    [[10,42,24],[10,52,20],[10,62,16]].forEach(([rx,ry,rw])=>{
+      ctx.beginPath(); ctx.roundRect(rx,ry,rw,4,2); ctx.fill();
+    });
+    ctx.restore();
+  }
   ctx.restore();
+
+  /* Pain effects */
+  if (role==='pain') {
+    const sp = Math.sin(t*8)*0.5+0.5;
+    ['#fde047','#f97316','#ef4444'].forEach((c,i)=>{
+      const sx = 36+i*8, sy = -180-i*10;
+      ctx.fillStyle=c; ctx.globalAlpha=sp*(0.9-i*0.2);
+      ctx.beginPath(); ctx.arc(sx,sy,4+i*2,0,Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha=1;
+  }
 }
 
-function drawKidney(cx, cy, sc = 1, pulse = 0) {
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.scale(sc, sc);
-  // Left & Right Kidneys
-  [-1, 1].forEach(side => {
-    ctx.save();
-    ctx.translate(side * 64, 0);
-    ctx.rotate(side * 0.2);
-    const g = ctx.createLinearGradient(-30, -50, 30, 50);
-    g.addColorStop(0, '#fb7185'); g.addColorStop(1, '#be123c');
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.ellipse(0, 0, 34, 58, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = `rgba(255,255,255,${0.35 + pulse * 0.45})`;
-    ctx.beginPath(); ctx.arc(-side * 6, -12, 7 + pulse * 4, 0, Math.PI * 2); ctx.fill();
+/* ═══════════════════════════════════════════════════════════════
+   ORGAN ANIMASI
+   ═══════════════════════════════════════════════════════════════ */
+
+function drawKidney(cx, cy, sc=1) {
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(sc, sc);
+  const pulse = beat()*0.12;
+
+  [-1,1].forEach(side => {
+    ctx.save(); ctx.translate(side*68,0); ctx.rotate(side*0.18);
+    const g = ctx.createLinearGradient(-36,-64,36,64);
+    g.addColorStop(0,'#fb7185'); g.addColorStop(0.5,'#e11d48'); g.addColorStop(1,'#9f1239');
+    ctx.fillStyle=g;
+    ctx.beginPath(); ctx.ellipse(0,0,36+pulse*8,62+pulse*10,0,0,Math.PI*2); ctx.fill();
+    /* detail ginjal */
+    ctx.fillStyle='rgba(255,255,255,0.22)';
+    ctx.beginPath(); ctx.ellipse(-side*8,-14,10,16,0.2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='rgba(254,215,170,0.5)';
+    ctx.beginPath(); ctx.ellipse(0,0,16,28,0,0,Math.PI*2); ctx.fill();
     ctx.restore();
   });
-  // Ureters + animated droplets
-  ctx.strokeStyle = '#fda4af'; ctx.lineWidth = 8; ctx.lineCap = 'round';
-  ctx.beginPath(); ctx.moveTo(-48, 48); ctx.quadraticCurveTo(-24, 105, -16, 145); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(48, 48); ctx.quadraticCurveTo(24, 105, 16, 145); ctx.stroke();
-  const dy = (t * 1.5) % 1;
-  ctx.fillStyle = '#fde047';
-  ctx.beginPath(); ctx.arc(-48 + dy * 32, 48 + dy * 97, 7, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.arc(48 - ((dy + 0.5) % 1) * 32, 48 + ((dy + 0.5) % 1) * 97, 7, 0, Math.PI * 2); ctx.fill();
-  // Bladder
-  ctx.fillStyle = '#f43f5e';
-  ctx.beginPath(); ctx.ellipse(0, 168, 46, 36, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#fde047';
-  ctx.beginPath(); ctx.ellipse(0, 178, 28, 13, 0, 0, Math.PI * 2); ctx.fill();
+
+  /* Ureter kiri & kanan + droplet animasi */
+  ctx.strokeStyle='#fda4af'; ctx.lineWidth=9; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(-52,52); ctx.quadraticCurveTo(-24,120,-18,168); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(52,52); ctx.quadraticCurveTo(24,120,18,168); ctx.stroke();
+
+  const dp1 = (t*1.4)%1, dp2 = (t*1.4+0.5)%1;
+  const urL = (u) => { return {x:-52+u*34, y:52+u*116}; };
+  const urR = (u) => { return {x:52-u*34, y:52+u*116}; };
+  ['#fde047','#5eead4'].forEach((c,i)=>{
+    ctx.fillStyle=c; const dp=i===0?dp1:dp2;
+    const pL=urL(dp), pR=urR(dp);
+    ctx.beginPath(); ctx.arc(pL.x,pL.y,8,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(pR.x,pR.y,8,0,Math.PI*2); ctx.fill();
+  });
+
+  /* Kandung kemih */
+  const bPulse = beat()*6;
+  const bg = ctx.createRadialGradient(0,180,0,0,180,56+bPulse);
+  bg.addColorStop(0,'#f43f5e'); bg.addColorStop(1,'#9f1239');
+  ctx.fillStyle=bg;
+  ctx.beginPath(); ctx.ellipse(0,180,52+bPulse*0.4,46+bPulse*0.3,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(253,224,71,0.8)';
+  ctx.beginPath(); ctx.ellipse(0,190,28,13,0,0,Math.PI*2); ctx.fill();
+
+  /* Label */
   ctx.restore();
 }
+
+function drawBacteria(x,y,r,color='#dc2626') {
+  const sp=Math.sin(t*6+x)*4;
+  ctx.fillStyle=color;
+  ctx.beginPath(); ctx.arc(x, y+sp, r, 0, Math.PI*2); ctx.fill();
+  /* flagela */
+  ctx.strokeStyle=color+'88'; ctx.lineWidth=2; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(x+r,y+sp); ctx.quadraticCurveTo(x+r+8,y+sp-6,x+r+4,y+sp+4); ctx.stroke();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PHONE MOCKUP
+   ═══════════════════════════════════════════════════════════════ */
 
 function drawPhone(x, y, w, h, title, fn) {
   ctx.save();
-  ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 44; ctx.shadowOffsetY = 20;
-  rr(x, y, w, h, 46, '#0f172a', '#2dd4bf88', 4);
-  ctx.restore();
-  rr(x + 14, y + 14, w - 28, h - 28, 36, '#f8fafb');
-  rr(x + w / 2 - 52, y + 22, 104, 18, 9, '#0f172a');
-  rr(x + 14, y + 14, w - 28, 86, [36, 36, 0, 0], '#0d9488');
-  txt(title, x + w / 2, y + 68, 22, '#fff', 'center', '800', w - 60);
+  shadow(44,'rgba(0,0,0,0.6)',0,20);
+  rr(x, y, w, h, 48, '#0a0f1a', '#2dd4bf66', 3);
+  noShadow();
+
+  /* Screen */
+  rr(x+12, y+12, w-24, h-24, 38, '#f8fafb');
+
+  /* Notch */
+  rr(x+w/2-54, y+20, 108, 18, 9, '#1e293b');
+  ctx.fillStyle='#374151'; ctx.beginPath(); ctx.arc(x+w/2+28,y+29,5,0,Math.PI*2); ctx.fill();
+
+  /* Status bar */
+  ctx.fillStyle='#64748b'; ctx.font='600 14px "Plus Jakarta Sans",sans-serif'; ctx.textAlign='left';
+  ctx.fillText('9:41', x+28, y+48);
+  /* Baterai mini */
+  rr(x+w-66,y+38,32,16,4,'none','#64748b',2);
+  rr(x+w-64,y+40,20,12,3,'#16a34a');
+
+  /* Header gradient */
+  rr(x+12, y+12, w-24, 94, [38,38,0,0], '#0d9488');
+  txt(title, x+w/2, y+72, 20, '#fff', 'center', '800', w-50);
+
+  /* Content clip */
   ctx.save();
-  ctx.beginPath(); ctx.roundRect(x + 14, y + 100, w - 28, h - 114, [0, 0, 36, 36]); ctx.clip();
-  fn(x + 28, y + 116, w - 56, h - 140);
+  ctx.beginPath(); ctx.roundRect(x+12, y+106, w-24, h-118, [0,0,38,38]); ctx.clip();
+  fn(x+22, y+114, w-44, h-136);
+  ctx.restore();
   ctx.restore();
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   BACKGROUND
+   ═══════════════════════════════════════════════════════════════ */
+
+function drawBackground(sceneColor='#042f2e') {
+  /* Gradient background */
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#031a18');
+  g.addColorStop(0.4, sceneColor);
+  g.addColorStop(1,'#020e0d');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  /* Beat radial glow */
+  const b=beat();
+  const rg = ctx.createRadialGradient(W/2,H*0.4,0,W/2,H*0.4,340+b*70);
+  rg.addColorStop(0,`rgba(45,212,191,${0.12+b*0.1})`);
+  rg.addColorStop(1,'rgba(45,212,191,0)');
+  ctx.fillStyle=rg; ctx.fillRect(0,0,W,H);
+
+  /* Floating particles */
+  for(let i=0;i<16;i++){
+    const px=((i*173+t*22)%(W+60))-30;
+    const py=((i*251-t*(28+i*3))%H+H)%H;
+    const r=3+(i%5)*1.8;
+    ctx.fillStyle=i%3===0?'rgba(94,234,212,0.16)':i%3===1?'rgba(253,224,71,0.11)':'rgba(248,113,113,0.1)';
+    ctx.beginPath(); ctx.arc(px,py,r,0,Math.PI*2); ctx.fill();
+  }
+}
+
+/* ── Progress bar atas ── */
+function drawTopBar() {
+  rr(36,32,W-72,8,4,'#ffffff1a');
+  rr(36,32,(W-72)*(t/DUR),8,4,'#5eead4');
+
+  /* Watermark kecil */
+  rr(36,54,174,30,15,'#ffffff14','#5eead444',1.5);
+  txt('GENICARE', 123, 69, 13, '#99f6e4', 'center', '800');
+}
+
+/* ── Scene tag chip ── */
+function drawTag(tag, sub='') {
+  rr(36,98,W-72,52,[16,16,8,8],'#0d948899','#5eead466',1.5);
+  txt(tag, W/2, 116, 19, '#5eead4', 'center', '800');
+  if(sub) txt(sub, W/2, 136, 14, '#99f6e4aa', 'center', '600');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENES
+   ═══════════════════════════════════════════════════════════════ */
+
+const SCENE_BREAKS = [0, 5.5, 11, 16.5, 22, 27.5, 33];
 
 function drawScene() {
-  // Animated background
-  const g = ctx.createLinearGradient(0, 0, W, H);
-  g.addColorStop(0, '#042f2e'); g.addColorStop(0.5, '#0f4c46'); g.addColorStop(1, '#041f1e');
-  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const scIdx = SCENE_BREAKS.findIndex((v,i)=>t>=v && t<SCENE_BREAKS[i+1]);
+  if(playing && scIdx !== lastScene) { lastScene=scIdx; playSfx('whoosh'); }
 
-  // Beat-synced radial pulse
-  const beat = Math.abs(Math.sin(t * Math.PI * 2.2));
-  const bgGlow = ctx.createRadialGradient(W / 2, H * 0.45, 20, W / 2, H * 0.45, 360 + beat * 60);
-  bgGlow.addColorStop(0, 'rgba(45,212,191,0.18)'); bgGlow.addColorStop(1, 'rgba(45,212,191,0)');
-  ctx.fillStyle = bgGlow; ctx.fillRect(0, 0, W, H);
-
-  // Floating particles
-  for (let i = 0; i < 12; i++) {
-    const px = ((i * 173 + t * 28) % (W + 40)) - 20;
-    const py = ((i * 251 - t * (35 + i * 4)) % H + H) % H;
-    ctx.fillStyle = i % 2 ? 'rgba(94,234,212,0.18)' : 'rgba(253,224,71,0.14)';
-    ctx.beginPath(); ctx.arc(px, py, 4 + (i % 4) * 2, 0, Math.PI * 2); ctx.fill();
-  }
-
-  // Top progress bar
-  rr(32, 34, W - 64, 7, 4, '#ffffff24');
-  rr(32, 34, (W - 64) * (t / DUR), 7, 4, '#5eead4');
-  rr(32, 56, 174, 32, 16, '#ffffff18', '#5eead455', 1.5);
-  txt('GENICARE · 2026', 119, 72, 14, '#99f6e4', 'center', '800');
-
-  // Determine scene index for SFX
-  const scIdx = t < 4.5 ? 0 : t < 10 ? 1 : t < 16.5 ? 2 : t < 22.5 ? 3 : t < 27.5 ? 4 : 5;
-  if (playing && scIdx !== lastScene) {
-    lastScene = scIdx;
-    playSfx('whoosh');
-  }
-
+  /* ── SCENE 0: HOOK (0–5.5s) ── */
   if (scIdx === 0) {
-    // SCENE 1: HOOK (0 - 4.5s)
-    const p = easeBack(seg(0, 0.7));
-    ctx.save(); ctx.translate(W / 2 - 90, 380); ctx.scale(p, p);
-    drawKidney(0, -40, 1.05, beat);
+    drawBackground('#0d3a30');
+    drawTopBar();
+
+    /* Judul besar HOOK */
+    const p1 = easeBack(seg(0, 0.8));
+    ctx.save(); ctx.globalAlpha = easeOut(seg(0,0.5));
+    drawTag('TAHUKAH KAMU?', 'GeniCare Kesehatan Genitourinary');
     ctx.restore();
-    drawPerson(W / 2 + 135, 390, 'pain', 1.45 * p);
 
-    const p2 = easeOut(seg(0.4, 1.0));
-    ctx.save(); ctx.globalAlpha = p2;
-    rr(110, 640 + (1 - p2) * 30, 500, 56, 28, '#0d9488', '#5eead4', 2);
-    txt('TAHUKAH KAMU?', W / 2, 668 + (1 - p2) * 30, 26, '#fff', 'center', '800');
-    rr(80, 720 + (1 - p2) * 30, 560, 64, 18, '#dc2626');
-    txt('TAHAN KENCING ITU BAHAYA!', W / 2, 752 + (1 - p2) * 30, 28, '#fff', 'center', '800');
-    txt('Dzaky sering tahan kencing—padahal bisa picu ISK & Batu Ginjal!', W / 2, 848, 28, '#5eead4', 'center', '800', 580);
+    /* Kidney animasi masuk */
+    ctx.save();
+    ctx.translate(W/2 - 70, 440);
+    ctx.scale(p1, p1);
+    drawKidney(0, 0, 0.9);
     ctx.restore();
-  } else if (scIdx === 1) {
-    // SCENE 2: INTRO + HYDRATION (4.5 - 10s)
-    const p = easeOut(seg(4.5, 5.2));
-    txt('SOLUSINYA:', W / 2, 145, 22, '#99f6e4', 'center', '800');
-    txt('GeniCare', W / 2, 198, 52, '#fff', 'center', '800');
-    const py = 270 + (1 - p) * 140;
-    drawPhone(140, py, 440, 820, 'Beranda GeniCare', (ix, iy, iw) => {
-      const fillPct = Math.min(1, seg(5.5, 8.5));
-      rr(ix, iy, iw, 140, 20, '#0d9488');
-      txt('Selamat pagi!', ix + 20, iy + 36, 18, '#ccfbf1', 'left', '700');
-      txt('Progres Hidrasi Harian', ix + 20, iy + 68, 22, '#fff', 'left', '800');
-      rr(ix + 20, iy + 100, iw - 40, 14, 7, '#ffffff33');
-      rr(ix + 20, iy + 100, (iw - 40) * fillPct, 14, 7, '#5eead4');
-      txt(Math.round(fillPct * 100) + '%', ix + iw - 24, iy + 68, 22, '#5eead4', 'right', '800');
 
-      rr(ix, iy + 160, iw / 2 - 8, 130, 18, '#fff', '#e2e8f0');
-      txt(Math.round(fillPct * 2000) + ' ml', ix + iw / 4 - 4, iy + 215, 26, '#0d9488', 'center', '800');
-      txt('Air hari ini', ix + iw / 4 - 4, iy + 255, 15, '#64748b', 'center', '700');
+    /* Karakter Dzaky (pain) di kanan */
+    ctx.save(); ctx.globalAlpha = easeOut(seg(0.3,1));
+    drawChar(W/2+150, 760, 'pain', 1.3);
+    ctx.restore();
 
-      rr(ix + iw / 2 + 8, iy + 160, iw / 2 - 8, 130, 18, '#fff', '#e2e8f0');
-      txt('5 kali', ix + iw * 0.75 + 4, iy + 215, 26, '#0d9488', 'center', '800');
-      txt('Berkemih', ix + iw * 0.75 + 4, iy + 255, 15, '#64748b', 'center', '700');
+    /* Teks headline */
+    const p2 = easeOut(seg(0.6, 1.3));
+    ctx.save(); ctx.globalAlpha = p2; ctx.translate(0, (1-p2)*30);
+    rr(60, 790+(1-p2)*24, W-120, 68, 20, '#dc2626cc', '#fda4af66', 1.5);
+    txt('TAHAN KENCING ITU BAHAYA!', W/2, 824, 30, '#fff', 'center', '800');
+    ctx.restore();
 
-      rr(ix, iy + 310, iw, 190, 18, '#f0fdfa', '#99f6e4');
-      txt('Pantau minum & catatan berkemih harian dengan mudah.', ix + iw / 2, iy + 405, 20, '#0f766e', 'center', '700', iw - 40);
-    });
-    drawPerson(95, 1070, 'drink', 1.25);
-  } else if (scIdx === 2) {
-    // SCENE 3: CUSTOM PENGINGAT KENCING (10 - 16.5s)
-    const p = easeOut(seg(10, 10.6));
-    txt('PENGINGAT KENCING CUSTOM', W / 2, 155, 24, '#5eead4', 'center', '800');
-    txt('Atur Jam & Interval Sendiri!', W / 2, 208, 36, '#fff', 'center', '800', 620);
-    drawPhone(140, 270 + (1 - p) * 60, 440, 820, 'Pengingat Berkemih', (ix, iy, iw) => {
-      rr(ix, iy, iw, 210, 18, '#fff', '#e2e8f0');
-      txt('Mode: Jadwal Jam Tertentu', ix + 18, iy + 36, 18, '#0f172a', 'left', '800');
-      const times = ['08:00', '11:00', '14:00', '17:00', '20:00'];
-      times.forEach((tm, idx) => {
-        const pop = easeBack(seg(10.5 + idx * 0.3, 10.9 + idx * 0.3));
-        const cx = ix + 18 + (idx % 3) * 114, cy = iy + 75 + Math.floor(idx / 3) * 44;
-        ctx.save(); ctx.globalAlpha = pop;
-        rr(cx, cy, 102, 34, 17, '#0d9488');
-        txt(tm + '  ×', cx + 51, cy + 17, 15, '#fff', 'center', '700');
+    const p3 = easeOut(seg(1.4, 2.4));
+    ctx.save(); ctx.globalAlpha = p3;
+    txt('Dzaky sering nahan kencing,', W/2, 900, 28, '#5eead4','center','700',640);
+    txt('padahal bisa picu ISK & Batu Ginjal!', W/2, 940, 28, '#5eead4','center','700',640);
+    ctx.restore();
+
+    /* Karakter Dr. Hana muncul kiri */
+    ctx.save(); ctx.globalAlpha=easeOut(seg(2.2,3));
+    drawChar(140, 760, 'doctor', 1.1);
+    ctx.restore();
+
+    /* Speech bubble Dr. Hana */
+    const p4 = easeOut(seg(2.8,3.6));
+    ctx.save(); ctx.globalAlpha=p4;
+    rr(190, 540+(1-p4)*20, 390, 60, 16, '#fff9', '#5eead466',1.5);
+    txt('Dr. Hana: "Ayo, kita cek sama-sama!"', 385, 570, 15, '#0f172a','center','700',360);
+    ctx.restore();
+  }
+
+  /* ── SCENE 1: SOLUSI HIDRASI (5.5–11s) ── */
+  else if (scIdx === 1) {
+    drawBackground('#0a2d3a');
+    drawTopBar();
+    drawTag('SOLUSI #1 · HIDRASI CUKUP');
+
+    const p = easeOut(seg(5.5, 6.3));
+    txt('GeniCare', W/2, 182, 56, '#fff', 'center', '800');
+    txt('Pantau minum & berkemih harian', W/2, 234, 24, '#5eead4','center','700',640);
+
+    /* Phone mockup animasi masuk dari bawah */
+    const phoneY = lerp(H, 280, easeBack(seg(5.5, 6.5)));
+    drawPhone(130, phoneY, 460, 850, 'Beranda GeniCare', (ix,iy,iw) => {
+      const fillPct = easeOut(seg(6.6, 9.4));
+      /* Progress hidrasi */
+      rr(ix, iy, iw, 150, 18, '#0d9488');
+      txt('Selamat pagi, Dzaky!', ix+18, iy+34, 17, '#ccfbf1','left','700');
+      txt('Progres Hidrasi Harian', ix+18, iy+64, 20, '#fff','left','800');
+      rr(ix+18, iy+96, iw-36, 16, 8, '#ffffff33');
+      rr(ix+18, iy+96, (iw-36)*fillPct, 16, 8, '#5eead4');
+      txt(Math.round(fillPct*100)+'%', ix+iw-22, iy+64, 20,'#5eead4','right','800');
+
+      /* Stat cards */
+      rr(ix, iy+170, iw/2-6, 130, 16, '#fff','#e2e8f0');
+      txt(Math.round(fillPct*2000)+' ml', ix+iw/4-3, iy+228, 24,'#0d9488','center','800');
+      txt('Air hari ini', ix+iw/4-3, iy+264, 14,'#64748b','center','600');
+
+      rr(ix+iw/2+6, iy+170, iw/2-6, 130, 16, '#fff','#e2e8f0');
+      txt('6 kali', ix+iw*0.75+3, iy+228, 24,'#0d9488','center','800');
+      txt('Berkemih', ix+iw*0.75+3, iy+264, 14,'#64748b','center','600');
+
+      /* Baris log */
+      rr(ix, iy+320, iw, 220, 16, '#f0fdfa','#99f6e4');
+      ['07:30 · +250 ml','10:15 · +500 ml','12:00 · +250 ml'].forEach((s,i)=>{
+        const lp = easeOut(seg(7.5+i*0.4,8+i*0.4));
+        ctx.save(); ctx.globalAlpha=lp; ctx.translate((1-lp)*20,0);
+        rr(ix+10, iy+338+i*62, iw-20, 48, 10, '#fff','#e2e8f0');
+        txt(s, ix+iw/2, iy+362+i*62, 15,'#0f172a','center','700');
         ctx.restore();
       });
-      const notif = easeBack(seg(12.6, 13.3));
-      if (notif > 0) {
-        ctx.save(); ctx.globalAlpha = notif;
-        rr(ix, iy + 235, iw, 120, 20, '#0f172a');
-        txt('GeniCare · Pengingat Berkemih', ix + 20, iy + 275, 19, '#5eead4', 'left', '800');
-        txt('Waktunya buang air kecil, jangan ditahan!', ix + 20, iy + 314, 16, '#fff', 'left', '700', iw - 40);
+    });
+
+    /* Karakter Dzaky minum air */
+    drawChar(94, 1080, 'drink', 1.2);
+  }
+
+  /* ── SCENE 2: PENGINGAT KENCING (11–16.5s) ── */
+  else if (scIdx === 2) {
+    drawBackground('#1a0d2e');
+    drawTopBar();
+    drawTag('FITUR PENGINGAT KENCING', 'Atur Jadwal Berkemih Custom');
+
+    txt('Jangan Pernah Nahan Kencing Lagi!', W/2, 190, 28,'#fff','center','800',640);
+
+    const p=easeBack(seg(11,11.8));
+    drawPhone(130, 260+(1-p)*80, 460, 870, 'Pengingat Berkemih', (ix,iy,iw)=>{
+      /* Mode selector */
+      rr(ix,iy,iw,220,16,'#fff','#e2e8f0');
+      txt('Mode Pengingat', ix+16,iy+28,17,'#0f172a','left','800');
+      ['Interval','Jadwal Jam','Mati'].forEach((m,i)=>{
+        const sel=i===1;
+        rr(ix+8+i*96,iy+54,88,40,20,sel?'#0d9488':'#f1f5f9',sel?'none':'#e2e8f0');
+        txt(m,ix+52+i*96,iy+74,14,sel?'#fff':'#64748b','center','700');
+      });
+      txt('Waktu yang diatur:', ix+16,iy+120,15,'#64748b','left','700');
+      const times=['08:00','11:00','14:00','17:00','20:00'];
+      times.forEach((tm,idx)=>{
+        const pop=easeBack(seg(11.8+idx*0.28,12.2+idx*0.28));
+        const tx=ix+10+(idx%3)*112, ty=iy+148+Math.floor(idx/3)*50;
+        ctx.save(); ctx.globalAlpha=pop; ctx.scale(pop,pop);
+        rr(tx/pop,ty/pop,100,36,18,'#0d9488');
+        txt(tm+'  ×',tx/pop+50,ty/pop+18,14,'#fff','center','700');
+        ctx.restore();
+      });
+
+      /* Notifikasi push */
+      const np=easeBack(seg(13.5,14.2));
+      if(np>0){
+        ctx.save(); ctx.globalAlpha=np;
+        shadow(20,'rgba(0,0,0,0.3)',0,8);
+        rr(ix,iy+228,iw,130,20,'#1e293b');
+        noShadow();
+        rr(ix+10,iy+240,40,40,10,'#0d9488');
+        ctx.fillStyle='#5eead4'; ctx.beginPath(); ctx.moveTo(ix+30,iy+248); ctx.bezierCurveTo(ix+40,iy+260,ix+40,iy+270,ix+30,iy+270); ctx.bezierCurveTo(ix+20,iy+270,ix+20,iy+260,ix+30,iy+248); ctx.fill();
+        txt('GeniCare · Pengingat',ix+70,iy+262,16,'#5eead4','left','800');
+        txt('Waktunya berkemih — jangan ditahan!',ix+16,iy+300,15,'#fff','left','700',iw-28);
         ctx.restore();
       }
-      // Urine color guide
-      rr(ix, iy + 380, iw, 200, 18, '#fff', '#e2e8f0');
-      txt('Skala Warna Urine', ix + 18, iy + 412, 18, '#0f172a', 'left', '800');
-      const cols = ['#f6f1c9', '#f1e68a', '#e9cf3c', '#d9a521', '#b9741a', '#8a3b14'];
-      const act = Math.floor((t - 10) * 1.4) % 6;
-      cols.forEach((c, i) => rr(ix + 18 + i * 58, iy + (i === act ? 442 : 458), 46, i === act ? 96 : 80, 10, c, i === act ? '#0f172a' : '#0002', i === act ? 3 : 1));
+
+      /* Skala warna urine */
+      rr(ix,iy+376,iw,210,16,'#fff','#e2e8f0');
+      txt('Skala Warna Urine',ix+16,iy+406,16,'#0f172a','left','800');
+      const cols=['#f6f1c9','#f1e68a','#e9cf3c','#d9a521','#b9741a','#8a3b14'];
+      const act=Math.floor((t-11)*1.6)%6;
+      cols.forEach((c,i)=>{
+        const sel=i===act;
+        rr(ix+10+i*58,iy+(sel?428:446),44,sel?96:80,10,c,sel?'#1e293b':'transparent',sel?2.5:0);
+        if(sel){ txt(String(i+1),ix+32+i*58,iy+480,13,'#1e293b','center','800'); }
+      });
     });
-    drawPerson(92, 1080, 'doctor', 1.25);
-  } else if (scIdx === 3) {
-    // SCENE 4: 8 MATERI + ANIMASI TIKTOK (16.5 - 22.5s)
-    txt('EDUKASI LENGKAP', W / 2, 155, 24, '#5eead4', 'center', '800');
-    txt('Animasi Interaktif + 8 Materi', W / 2, 208, 36, '#fff', 'center', '800', 620);
-    drawPhone(140, 270, 440, 820, '8 Materi Utama', (ix, iy, iw) => {
-      const list = ['1. ISK & Sistitis', '2. Batu Saluran Kemih', '3. AKI (Ginjal Akut)', '4. CKD (Ginjal Kronis)', '5. BPH (Prostat)', '6. Hidronefrosis', '7. Disfungsi Ereksi', '8. Varikokel'];
-      list.forEach((item, i) => {
-        const rv = easeOut(seg(16.6 + i * 0.35, 17.1 + i * 0.35));
-        ctx.save(); ctx.globalAlpha = rv;
-        rr(ix + (1 - rv) * 40, iy + i * 68, iw, 58, 14, '#fff', '#e2e8f0');
-        rr(ix + 12 + (1 - rv) * 40, iy + i * 68 + 11, 36, 36, 10, '#0d9488');
-        txt(String(i + 1), ix + 30 + (1 - rv) * 40, iy + i * 68 + 30, 16, '#fff', 'center', '800');
-        txt(item.replace(/^\d+\.\s*/, ''), ix + 60 + (1 - rv) * 40, iy + i * 68 + 30, 17, '#0f172a', 'left', '800');
+
+    drawChar(96, 1082, 'dzaky', 1.2);
+  }
+
+  /* ── SCENE 3: 8 MATERI EDUKASI (16.5–22s) ── */
+  else if (scIdx === 3) {
+    drawBackground('#1a2a0d');
+    drawTopBar();
+    drawTag('8 MATERI EDUKASI', 'Animasi TikTok-style • Tahukah Kamu?');
+
+    txt('Belajar Menyenangkan', W/2, 188, 32,'#fff','center','800');
+    txt('Dengan Karakter Dzaky & Dr. Hana!', W/2, 230, 23,'#5eead4','center','700',640);
+
+    drawPhone(130, 268, 460, 860, '8 Materi Utama', (ix,iy,iw)=>{
+      const list=['ISK & Sistitis','Batu Saluran Kemih','AKI (Ginjal Akut)','CKD (Ginjal Kronis)','BPH (Prostat)','Hidronefrosis','Disfungsi Ereksi','Varikokel'];
+      list.forEach((item,i)=>{
+        const rv=easeOut(seg(16.6+i*0.38,17.1+i*0.38));
+        ctx.save(); ctx.globalAlpha=rv; ctx.translate((1-rv)*50,0);
+        rr(ix,iy+i*74,iw,64,14,'#fff','#e2e8f0');
+        rr(ix+10,iy+i*74+12,40,40,10,'#0d9488');
+        txt(String(i+1),ix+30,iy+i*74+32,16,'#fff','center','800');
+        txt(item,ix+62,iy+i*74+30,16,'#0f172a','left','700',iw-72);
+        /* Play icon */
+        ctx.fillStyle='#0d9488'; ctx.beginPath();
+        ctx.moveTo(ix+iw-30,iy+i*74+22);
+        ctx.lineTo(ix+iw-30,iy+i*74+42);
+        ctx.lineTo(ix+iw-12,iy+i*74+32);
+        ctx.closePath(); ctx.fill();
         ctx.restore();
       });
     });
-    drawPerson(92, 1080, 'doctor', 1.25);
-  } else if (scIdx === 4) {
-    // SCENE 5: CEK KELUHAN & TANYA AI (22.5 - 27.5s)
-    txt('CEK KELUHAN & TANYA AI', W / 2, 155, 24, '#5eead4', 'center', '800');
-    txt('Deteksi Urgensi & Asisten AI', W / 2, 208, 36, '#fff', 'center', '800', 620);
-    drawPhone(140, 270, 440, 820, 'Health Alert & AI', (ix, iy, iw) => {
-      [['HIJAU · Pantau Mandiri', '#16a34a'], ['KUNING · Konsultasi Dokter', '#ca8a04'], ['MERAH · Segera ke IGD!', '#dc2626']].forEach(([lb, c], i) => {
-        const rv = easeBack(seg(22.6 + i * 0.35, 23.1 + i * 0.35));
-        ctx.save(); ctx.globalAlpha = rv;
-        rr(ix, iy + i * 74, iw, 60, 16, c);
-        txt(lb, ix + iw / 2, iy + i * 74 + 30, 17, '#fff', 'center', '800');
+
+    drawChar(94, 1082, 'doctor', 1.2, -1);
+  }
+
+  /* ── SCENE 4: CEK KELUHAN & AI (22–27.5s) ── */
+  else if (scIdx === 4) {
+    drawBackground('#2a1a0d');
+    drawTopBar();
+    drawTag('CEK KELUHAN & AI CHAT', 'Deteksi Urgensi Otomatis');
+
+    txt('Keluhkan Gejalamu,', W/2, 185, 32,'#fff','center','800');
+    txt('Dapatkan Panduan Cepat!', W/2, 227, 25,'#f97316','center','700',640);
+
+    drawPhone(130, 268, 460, 860, 'Keluhan & Health AI', (ix,iy,iw)=>{
+      /* Traffic light urgensi */
+      [['HIJAU · Pantau Mandiri','#16a34a'],['KUNING · Konsultasi Dokter','#ca8a04'],['MERAH · Segera ke IGD!','#dc2626']].forEach(([lb,c],i)=>{
+        const rv=easeBack(seg(22.5+i*0.4,23+i*0.4));
+        ctx.save(); ctx.globalAlpha=rv; ctx.scale(rv+(1-rv)*0.7,rv+(1-rv)*0.7);
+        const factor = rv+(1-rv)*0.7;
+        rr(ix/factor,iy/factor+i*78,iw/factor,64/factor,[16/factor],c);
+        const beat2=Math.abs(Math.sin(t*4+i))*0.3+0.7;
+        ctx.globalAlpha*=beat2;
+        txt(lb,(ix+iw/2)/factor,(iy+i*78+32)/factor,17,'#fff','center','800',iw);
         ctx.restore();
       });
-      rr(ix, iy + 245, iw, 260, 20, '#f1f5f9', '#e2e8f0');
-      rr(ix + 54, iy + 268, iw - 70, 56, 16, '#0d9488');
-      txt('Dok, nyeri saat kencing kenapa?', ix + 70, iy + 296, 15, '#fff', 'left', '700', iw - 96);
-      rr(ix + 16, iy + 342, iw - 48, 130, 16, '#fff', '#e2e8f0');
-      txt('Bisa jadi tanda ISK/Sistitis. Perbanyak minum & periksa ke dokter.', ix + 30, iy + 407, 15, '#0f172a', 'left', '700', iw - 76);
+
+      /* AI Chat bubble */
+      const cp=easeOut(seg(24,24.8));
+      ctx.save(); ctx.globalAlpha=cp;
+      rr(ix, iy+258, iw, 76, 18, '#1e293b');
+      rr(ix+10,iy+270,iw-20,52,14,'#0d9488');
+      txt('"Dok, nyeri saat kencing kenapa?"',ix+iw/2,iy+296,14,'#fff','center','700',iw-32);
+      ctx.restore();
+
+      const ap=easeOut(seg(25,25.8));
+      ctx.save(); ctx.globalAlpha=ap;
+      rr(ix, iy+350, iw, 150, 18, '#f8fafc','#e2e8f0');
+      rr(ix+10,iy+364,22,22,11,'#0d9488');
+      txt('AI',ix+21,iy+375,12,'#fff','center','800');
+      txt('Bisa jadi ISK/Sistitis. Perbanyak minum air putih & periksakan ke dokter bila berlanjut.',ix+iw/2,iy+430,14,'#0f172a','center','700',iw-36);
+      ctx.restore();
     });
-    drawPerson(92, 1080, 'doctor', 1.25);
-  } else {
-    // SCENE 6: OUTRO CTA (27.5 - 32s)
-    const p = easeBack(seg(27.5, 28.2));
-    ctx.save(); ctx.translate(W / 2, 600); ctx.scale(p, p);
-    rr(-230, -210, 460, 420, 40, '#0f4c46', '#5eead4', 3);
-    // Drawn water droplet icon
-    ctx.fillStyle = '#5eead4';
-    ctx.beginPath(); ctx.moveTo(0, -165); ctx.bezierCurveTo(36, -120, 36, -90, 0, -90); ctx.bezierCurveTo(-36, -90, -36, -120, 0, -165); ctx.fill();
-    txt('GeniCare', 0, -35, 52, '#fff', 'center', '800');
-    txt('Kenali · Pantau · Jaga Kesehatanmu', 0, 35, 22, '#99f6e4', 'center', '700', 380);
-    rr(-170, 100, 340, 68, 34, '#2dd4bf');
-    txt('Coba Sekarang Gratis!', 0, 134, 24, '#042f2e', 'center', '800');
+
+    drawChar(94, 1082, 'pain', 1.2);
+    drawChar(W-94, 1082, 'doctor', 1.1, -1);
+  }
+
+  /* ── SCENE 5: OUTRO CTA (27.5–33s) ── */
+  else {
+    drawBackground('#030c10');
+    drawTopBar();
+
+    /* Big logo */
+    const p=easeBack(seg(27.5,28.5));
+    ctx.save(); ctx.translate(W/2, 560); ctx.scale(p,p);
+    shadow(40,'rgba(45,212,191,0.4)',0,0);
+    rr(-240,-220,480,440,44,'#0a2825','#5eead4',3);
+    noShadow();
+    /* Droplet icon */
+    ctx.fillStyle='#5eead4';
+    ctx.beginPath();
+    ctx.moveTo(0,-168); ctx.bezierCurveTo(50,-118,50,-82,0,-82);
+    ctx.bezierCurveTo(-50,-82,-50,-118,0,-168); ctx.fill();
+    /* Shine droplet */
+    ctx.fillStyle='rgba(255,255,255,0.4)';
+    ctx.beginPath(); ctx.ellipse(-10,-130,10,16,-0.4,0,Math.PI*2); ctx.fill();
+
+    txtStroke('GeniCare', 0,-28, 56, '#fff','#0d9488');
+    txt('Kenali · Pantau · Jaga Kesehatanmu', 0,42,22,'#99f6e4','center','700',400);
+
+    /* CTA button */
+    const cp=easeBack(seg(28.4,29.2));
+    ctx.save(); ctx.globalAlpha=cp; ctx.scale(cp,cp);
+    const cg=ctx.createLinearGradient(-170,0,170,0);
+    cg.addColorStop(0,'#0d9488'); cg.addColorStop(1,'#2dd4bf');
+    rr(-175,110,350,72,36,cg);
+    txt('Download Gratis Sekarang!',0,146,24,'#042f2e','center','800',330);
     ctx.restore();
-    drawPerson(92, 1080, 'doctor', 1.25);
+
+    ctx.restore();
+
+    /* Karakter berdua di bawah */
+    const cp2=easeOut(seg(28.8,30));
+    ctx.save(); ctx.globalAlpha=cp2;
+    drawChar(190, 1070, 'dzaky', 1.1);
+    drawChar(W-190, 1070, 'doctor', 1.1, -1);
+    ctx.restore();
+
+    /* Rating stars */
+    const sp=easeOut(seg(29.5,30.5));
+    ctx.save(); ctx.globalAlpha=sp;
+    for(let i=0;i<5;i++){
+      ctx.fillStyle='#fde047';
+      const sx=W/2-88+i*44, sy=H-220;
+      ctx.save(); ctx.translate(sx,sy); ctx.rotate(Math.sin(t*3+i)*0.1);
+      ctx.beginPath();
+      for(let j=0;j<5;j++){
+        const ang=(j*4+1)*Math.PI/5-Math.PI/2;
+        const r2=j%2===0?16:7;
+        if(j===0) ctx.moveTo(Math.cos(ang)*r2,Math.sin(ang)*r2);
+        else ctx.lineTo(Math.cos(ang)*r2,Math.sin(ang)*r2);
+      }
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
+    txt('4.9★ Rating pengguna', W/2, H-180, 18,'#fde047','center','800');
+    ctx.restore();
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN LOOP
+   ═══════════════════════════════════════════════════════════════ */
 
 function loop(now) {
   const dt = Math.min(0.05, (now - last) / 1000);
@@ -358,13 +773,15 @@ function loop(now) {
 }
 requestAnimationFrame(loop);
 
-// ===== AUDIO ENGINE (Beat + Bass + Melody + SFX) =====
-let ac, beatTimer, dest, masterGain;
+/* ═══════════════════════════════════════════════════════════════
+   AUDIO ENGINE — Musik beat + melodi + bass + SFX
+   ═══════════════════════════════════════════════════════════════ */
+let ac, beatInterval, masterGain, dest;
+
 function initAudio() {
   if (!ac) {
     ac = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = ac.createGain();
-    masterGain.gain.value = 0.55;
+    masterGain = ac.createGain(); masterGain.gain.value = 0.6;
     dest = ac.createMediaStreamDestination();
     masterGain.connect(ac.destination);
     masterGain.connect(dest);
@@ -372,109 +789,130 @@ function initAudio() {
   if (ac.state === 'suspended') ac.resume();
 }
 
-function playSfx(type) {
-  if (muted || !ac) return;
-  const now = ac.currentTime;
+function note(freq, start, dur, type='sine', vol=0.15, dest2=null) {
+  if (!ac || muted) return;
   const o = ac.createOscillator(), g = ac.createGain();
-  if (type === 'whoosh') {
-    o.type = 'sine';
-    o.frequency.setValueAtTime(240, now);
-    o.frequency.exponentialRampToValueAtTime(720, now + 0.18);
-    g.gain.setValueAtTime(0.22, now);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
-    o.connect(g); g.connect(masterGain);
-    o.start(now); o.stop(now + 0.23);
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.001, start);
+  g.gain.linearRampToValueAtTime(vol, start+0.015);
+  g.gain.exponentialRampToValueAtTime(0.001, start+dur);
+  o.connect(g); g.connect(dest2 || masterGain);
+  o.start(start); o.stop(start+dur+0.02);
+}
+
+function playSfx(type) {
+  if (!ac || muted) return;
+  const now = ac.currentTime;
+  if (type==='whoosh') {
+    const o=ac.createOscillator(), g=ac.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(300,now); o.frequency.exponentialRampToValueAtTime(900,now+0.15);
+    g.gain.setValueAtTime(0.25,now); g.gain.exponentialRampToValueAtTime(0.001,now+0.2);
+    o.connect(g); g.connect(masterGain); o.start(now); o.stop(now+0.22);
   }
 }
+
+/* Chord progression: I–V–VI–IV in C major (C,G,Am,F) */
+const CHORD = [
+  [261.63,329.63,392.00],  // C major
+  [392.00,493.88,587.33],  // G major
+  [220.00,261.63,329.63],  // A minor
+  [174.61,220.00,261.63],  // F major
+];
+const MELODY = [523.25,587.33,659.25,698.46,783.99,698.46,659.25,587.33,523.25,493.88,523.25,587.33];
+const BASS   = [130.81,196.00,110.00,174.61];
 
 function startAudio() {
   if (muted) return;
   initAudio();
-  clearInterval(beatTimer);
-  const melody = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 783.99, 1046.5];
-  const bass = [130.81, 130.81, 164.81, 164.81, 146.83, 146.83, 196.0, 196.0];
+  clearInterval(beatInterval);
   let step = 0;
-  beatTimer = setInterval(() => {
+  beatInterval = setInterval(() => {
     if (!playing || muted || !ac) return;
     const now = ac.currentTime;
-    // Kick drum on even steps
-    if (step % 2 === 0) {
-      const ko = ac.createOscillator(), kg = ac.createGain();
-      ko.type = 'sine';
-      ko.frequency.setValueAtTime(140, now);
-      ko.frequency.exponentialRampToValueAtTime(42, now + 0.14);
-      kg.gain.setValueAtTime(0.38, now);
-      kg.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
-      ko.connect(kg); kg.connect(masterGain);
-      ko.start(now); ko.stop(now + 0.17);
+    const bar = Math.floor(step/8) % 4;
+
+    /* Kick drum */
+    if (step%2===0) {
+      const ko=ac.createOscillator(), kg=ac.createGain();
+      ko.type='sine'; ko.frequency.setValueAtTime(150,now); ko.frequency.exponentialRampToValueAtTime(45,now+0.12);
+      kg.gain.setValueAtTime(0.42,now); kg.gain.exponentialRampToValueAtTime(0.001,now+0.15);
+      ko.connect(kg); kg.connect(masterGain); ko.start(now); ko.stop(now+0.16);
     }
-    // Bass
-    const bo = ac.createOscillator(), bg = ac.createGain();
-    bo.type = 'triangle';
-    bo.frequency.value = bass[step % bass.length];
-    bg.gain.setValueAtTime(0.18, now);
-    bg.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
-    bo.connect(bg); bg.connect(masterGain);
-    bo.start(now); bo.stop(now + 0.25);
-    // Synth Pluck
-    const mo = ac.createOscillator(), mg = ac.createGain();
-    mo.type = 'sine';
-    mo.frequency.value = melody[step % melody.length];
-    mg.gain.setValueAtTime(0.16, now);
-    mg.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
-    mo.connect(mg); mg.connect(masterGain);
-    mo.start(now); mo.stop(now + 0.23);
+    /* Snare (hi-hat noise feel) */
+    if (step%4===2) {
+      const buf=ac.createBuffer(1,ac.sampleRate*0.08,ac.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*0.5;
+      const src=ac.createBufferSource(), sg=ac.createGain();
+      const f=ac.createBiquadFilter(); f.type='bandpass'; f.frequency.value=2000; f.Q.value=0.5;
+      src.buffer=buf; src.connect(f); f.connect(sg); sg.connect(masterGain);
+      sg.gain.setValueAtTime(0.14,now); sg.gain.exponentialRampToValueAtTime(0.001,now+0.09);
+      src.start(now); src.stop(now+0.1);
+    }
+    /* Hi-hat */
+    if (step%2===1) {
+      const buf2=ac.createBuffer(1,ac.sampleRate*0.04,ac.sampleRate);
+      const d2=buf2.getChannelData(0);
+      for(let i=0;i<d2.length;i++) d2[i]=(Math.random()*2-1);
+      const src2=ac.createBufferSource(), sg2=ac.createGain();
+      const f2=ac.createBiquadFilter(); f2.type='highpass'; f2.frequency.value=8000;
+      src2.buffer=buf2; src2.connect(f2); f2.connect(sg2); sg2.connect(masterGain);
+      sg2.gain.setValueAtTime(0.07,now); sg2.gain.exponentialRampToValueAtTime(0.001,now+0.05);
+      src2.start(now); src2.stop(now+0.06);
+    }
+
+    /* Bass */
+    note(BASS[bar]*0.5, now, 0.28, 'sawtooth', 0.12);
+
+    /* Chord pads (tiap 4 step) */
+    if (step%4===0) {
+      CHORD[bar].forEach(f => note(f, now, 0.95, 'sine', 0.055));
+    }
+    /* Melodi */
+    note(MELODY[step%MELODY.length], now, 0.26, 'triangle', 0.13);
+
     step++;
-  }, 280);
+  }, Math.round(60000/BPM/2)); /* per 8th note */
 }
 
-let recorder, chunks = [];
+/* ── Rekam ── */
+let recorder, chunks=[];
 function startRecording() {
-  initAudio();
-  t = 0; lastScene = -1; playing = true; recording = true;
+  initAudio(); t=0; lastScene=-1; playing=true; recording=true;
   document.getElementById('gate').classList.add('off');
   startAudio();
   const vStream = cv.captureStream(30);
-  const tracks = [...vStream.getVideoTracks(), ...(dest ? dest.stream.getAudioTracks() : [])];
-  const combined = new MediaStream(tracks);
-  chunks = [];
-  const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus') ? 'video/webm;codecs=vp9,opus' : 'video/webm';
-  recorder = new MediaRecorder(combined, { mimeType: mime });
-  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-  recorder.onstop = () => {
-    const blob = new Blob(chunks, { type: 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'genicare-demo-9x16.webm'; a.click();
-    document.getElementById('st').textContent = '✅ Selesai! File genicare-demo-9x16.webm sudah diunduh.';
+  const tracks = [...vStream.getVideoTracks(), ...(dest?dest.stream.getAudioTracks():[])];
+  chunks=[]; recorder=new MediaRecorder(new MediaStream(tracks),{mimeType:MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')?'video/webm;codecs=vp9,opus':'video/webm'});
+  recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+  recorder.onstop=()=>{
+    const blob=new Blob(chunks,{type:'video/webm'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='genicare-demo-9x16.webm'; a.click();
+    document.getElementById('st').textContent='Selesai! File genicare-demo-9x16.webm sudah diunduh.';
   };
   recorder.start();
-  document.getElementById('st').textContent = '⏺ Merekam video + suara (0–32 detik)... Mohon tunggu hingga selesai.';
+  document.getElementById('st').textContent='Merekam video + musik (0–33 detik)... Mohon tunggu.';
 }
-function stopRecording() {
-  recording = false;
-  if (recorder && recorder.state === 'recording') recorder.stop();
-}
+function stopRecording() { recording=false; if(recorder&&recorder.state==='recording') recorder.stop(); }
 
 function unlockAndPlay() {
   document.getElementById('gate').classList.add('off');
-  playing = true;
-  startAudio();
-  document.getElementById('st').textContent = '▶ Memutar demo dengan musik & efek suara...';
+  playing=true; initAudio(); startAudio();
+  document.getElementById('st').textContent='Memutar demo dengan musik & SFX...';
 }
 
 document.getElementById('gate').onclick = unlockAndPlay;
 document.getElementById('playBtn').onclick = () => {
   if (!playing) unlockAndPlay();
-  else { playing = false; document.getElementById('st').textContent = '⏸ Dijeda'; }
+  else { playing=false; document.getElementById('st').textContent='Dijeda'; }
 };
-document.getElementById('repBtn').onclick = () => { t = 0; lastScene = -1; unlockAndPlay(); };
+document.getElementById('repBtn').onclick = () => { t=0; lastScene=-1; unlockAndPlay(); };
 document.getElementById('muteBtn').onclick = e => {
-  muted = !muted;
-  e.target.textContent = muted ? 'Suara: Mati' : 'Suara: Nyala';
-  if (!muted && playing) startAudio();
+  muted=!muted; e.target.textContent=muted?'Suara: Mati':'Suara: Nyala';
+  if(!muted&&playing){initAudio();startAudio();}
+  else if(muted){clearInterval(beatInterval);}
 };
-document.getElementById('recBtn').onclick = () => { if (!recording) startRecording(); };
+document.getElementById('recBtn').onclick = () => { if(!recording) startRecording(); };
 </script>
 </body>
 </html>
