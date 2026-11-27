@@ -4,44 +4,87 @@ import * as V from '../views/eduView.js';
 
 let mode = 'video', cur = null, scene = 0, timer = null, playing = false;
 let soundOn = true, ac = null, musicTimer = null, step = 0;
-const SEC = 6000;
+const SEC = 6800;
 const reduced = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const vid = () => VIDEOS.find(v => v.id === cur);
 
+function cleanNarration(txt) {
+  return (txt || '').replace(/\*\*/g, '').replace(/\*/g, '').replace(/→/g, ' menjadi ').trim();
+}
+
+function stopVoice() {
+  try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch {}
+}
+
+function speakScene(sc) {
+  stopVoice();
+  if (!soundOn || !playing || !sc || !('speechSynthesis' in window)) return;
+  try {
+    const u = new SpeechSynthesisUtterance(cleanNarration(sc.text));
+    u.lang = 'id-ID';
+    u.rate = 1.04;
+    u.pitch = 1.05;
+    const voices = window.speechSynthesis.getVoices();
+    const idVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('id'));
+    if (idVoice) u.voice = idVoice;
+    window.speechSynthesis.speak(u);
+  } catch {}
+}
+
 function stopMusic() { clearInterval(musicTimer); musicTimer = null; }
-function playTone(freq, dur, type, vol) {
+
+function playWarmNote(freq, dur, vol) {
   if (!ac || !soundOn) return;
   const now = ac.currentTime;
-  const o = ac.createOscillator(), g = ac.createGain();
-  o.type = type; o.frequency.value = freq;
-  g.gain.setValueAtTime(0.001, now);
-  g.gain.linearRampToValueAtTime(vol, now + 0.015);
-  g.gain.exponentialRampToValueAtTime(0.001, now + dur);
-  o.connect(g); g.connect(ac.destination);
-  o.start(now); o.stop(now + dur + 0.02);
+  const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter();
+  o.type = 'sine';
+  o.frequency.value = freq;
+  f.type = 'lowpass';
+  f.frequency.value = 1100;
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.linearRampToValueAtTime(vol, now + 0.04);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+  o.connect(f); f.connect(g); g.connect(ac.destination);
+  o.start(now); o.stop(now + dur + 0.05);
 }
+
 function startMusic() {
   stopMusic();
   if (!soundOn || !playing) return;
   try {
     if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === 'suspended') ac.resume();
-    const chords = [[261.63, 329.63, 392], [392, 493.88, 587.33], [220, 261.63, 329.63], [174.61, 220, 261.63]];
-    const melody = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 783.99, 880.0];
-    const bass = [130.81, 196.0, 110.0, 174.61];
+    // Soft warm lo-fi marimba chords (low volume so Indonesian voiceover stays clear)
+    const chords = [
+      [261.63, 329.63, 392.00, 493.88],
+      [220.00, 261.63, 329.63, 392.00],
+      [174.61, 220.00, 261.63, 349.23],
+      [196.00, 246.94, 293.66, 392.00]
+    ];
     musicTimer = setInterval(() => {
       if (!soundOn || !playing || !ac) return;
-      const bar = Math.floor(step / 8) % 4;
-      playTone(melody[step % melody.length], 0.28, 'triangle', 0.09);
-      if (step % 2 === 0) playTone(bass[bar] * 0.5, 0.3, 'sine', 0.11);
-      if (step % 4 === 0) chords[bar].forEach(f => playTone(f, 0.7, 'sine', 0.035));
+      const bar = Math.floor(step / 4) % chords.length;
+      const chord = chords[bar];
+      if (step % 4 === 0) {
+        chord.forEach(freq => playWarmNote(freq, 1.35, 0.022));
+      }
+      playWarmNote(chord[step % chord.length] * 2, 0.45, 0.026);
       step++;
-    }, 300);
+    }, 420);
   } catch {}
 }
 
-export function stop() { clearInterval(timer); timer = null; playing = false; stopMusic(); }
-const show = () => V.showScene(vid(), scene, playing);
+export function stop() {
+  clearInterval(timer); timer = null; playing = false;
+  stopMusic(); stopVoice();
+}
+
+const show = () => {
+  const v = vid();
+  V.showScene(v, scene, playing);
+  if (playing && v && v.scenes) speakScene(v.scenes[scene]);
+};
+
 function start() {
   const v = vid(); stop(); playing = true;
   timer = setInterval(() => {
@@ -51,8 +94,15 @@ function start() {
   V.setPlaying(true, false);
   V.setSoundLabel(soundOn);
   startMusic();
+  if (v && v.scenes) speakScene(v.scenes[scene]);
 }
-function go(i) { const was = playing, v = vid(); scene = Math.max(0, Math.min(v.scenes.length - 1, i)); show(); if (was) start(); }
+
+function go(i) {
+  const was = playing, v = vid();
+  scene = Math.max(0, Math.min(v.scenes.length - 1, i));
+  show();
+  if (was) start();
+}
 
 function render() {
   V.setMode(mode);
@@ -76,7 +126,17 @@ export const actions = {
   },
   eduPrev: () => go(scene - 1),
   eduNext: () => go(scene + 1),
-  eduSound: () => { soundOn = !soundOn; V.setSoundLabel(soundOn); soundOn ? startMusic() : stopMusic(); },
+  eduSound: () => {
+    soundOn = !soundOn;
+    V.setSoundLabel(soundOn);
+    if (soundOn) {
+      startMusic();
+      const v = vid();
+      if (playing && v && v.scenes) speakScene(v.scenes[scene]);
+    } else {
+      stopMusic(); stopVoice();
+    }
+  },
   quizSubmit: () => V.showResult(Q.grade(V.readAnswers(Q.QUESTIONS.length))),
   quizReset: () => V.renderQuiz(Q.QUESTIONS)
 };
