@@ -3,11 +3,35 @@ import * as Q from '../models/quizModel.js';
 import * as V from '../views/eduView.js';
 
 let mode = 'video', cur = null, scene = 0, timer = null, playing = false;
-const SEC = 6000; // lama tiap bagian animasi
+let soundOn = true, ac = null, musicTimer = null, step = 0;
+const SEC = 6000;
 const reduced = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const vid = () => VIDEOS.find(v => v.id === cur);
 
-export function stop() { clearInterval(timer); timer = null; playing = false; }
+function stopMusic() { clearInterval(musicTimer); musicTimer = null; }
+function startMusic() {
+  stopMusic();
+  if (!soundOn || !playing) return;
+  try {
+    if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === 'suspended') ac.resume();
+    const notes = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 783.99, 880.0];
+    musicTimer = setInterval(() => {
+      if (!soundOn || !playing || !ac) return;
+      const now = ac.currentTime;
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = 'sine';
+      o.frequency.value = notes[step % notes.length];
+      g.gain.setValueAtTime(0.08, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      o.connect(g); g.connect(ac.destination);
+      o.start(now); o.stop(now + 0.36);
+      step++;
+    }, 340);
+  } catch {}
+}
+
+export function stop() { clearInterval(timer); timer = null; playing = false; stopMusic(); }
 const show = () => V.showScene(vid(), scene, playing);
 function start() {
   const v = vid(); stop(); playing = true;
@@ -16,6 +40,8 @@ function start() {
     else { stop(); V.setPlaying(false, true); }
   }, SEC);
   V.setPlaying(true, false);
+  V.setSoundLabel(soundOn);
+  startMusic();
 }
 function go(i) { const was = playing, v = vid(); scene = Math.max(0, Math.min(v.scenes.length - 1, i)); show(); if (was) start(); }
 
@@ -41,6 +67,7 @@ export const actions = {
   },
   eduPrev: () => go(scene - 1),
   eduNext: () => go(scene + 1),
+  eduSound: () => { soundOn = !soundOn; V.setSoundLabel(soundOn); soundOn ? startMusic() : stopMusic(); },
   quizSubmit: () => V.showResult(Q.grade(V.readAnswers(Q.QUESTIONS.length))),
   quizReset: () => V.renderQuiz(Q.QUESTIONS)
 };

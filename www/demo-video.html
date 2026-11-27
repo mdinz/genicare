@@ -82,6 +82,57 @@ function txt(str, x, y, size = 32, color = '#fff', align = 'center', weight = '8
   lines.forEach((l, i) => ctx.fillText(l, x, y + (i - (lines.length - 1) / 2) * lh));
 }
 
+function drawPerson(cx, cy, mode = 'doctor', sc = 1) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.scale(sc, sc);
+  const bob = Math.sin(t * 5) * 4;
+  ctx.translate(0, bob);
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.28)';
+  ctx.beginPath(); ctx.ellipse(0, 96, 36, 9, 0, 0, Math.PI * 2); ctx.fill();
+  // Body
+  ctx.fillStyle = mode === 'doctor' ? '#ffffff' : mode === 'pain' ? '#f43f5e' : '#14b8a6';
+  ctx.beginPath(); ctx.roundRect(-30, 18, 60, 74, [26, 26, 10, 10]); ctx.fill();
+  if (mode === 'doctor') {
+    ctx.strokeStyle = '#0d9488'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(0, 24, 16, 0, Math.PI); ctx.stroke();
+  }
+  // Head
+  ctx.fillStyle = '#fbd3b6';
+  ctx.beginPath(); ctx.arc(0, -10, 28, 0, Math.PI * 2); ctx.fill();
+  // Hair
+  ctx.fillStyle = '#1e293b';
+  ctx.beginPath(); ctx.arc(0, -18, 28, Math.PI, Math.PI * 2); ctx.fill();
+  // Eyes & Mouth
+  ctx.fillStyle = '#1e293b';
+  if (mode === 'pain') {
+    ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(-14, -14); ctx.lineTo(-6, -10); ctx.moveTo(14, -14); ctx.lineTo(6, -10); ctx.stroke();
+    ctx.fillStyle = '#be123c'; ctx.beginPath(); ctx.arc(0, 2, 5, 0, Math.PI * 2); ctx.fill();
+    // Sweat drop
+    ctx.fillStyle = '#38bdf8'; ctx.beginPath(); ctx.arc(24, -22 + (t * 20 % 12), 4, 0, Math.PI * 2); ctx.fill();
+  } else {
+    ctx.beginPath(); ctx.arc(-9, -10, 3.2, 0, Math.PI * 2); ctx.arc(9, -10, 3.2, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#be123c'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(0, -2, 8, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+  }
+  // Animated Arm
+  const wave = Math.sin(t * 7) * 0.25;
+  ctx.save();
+  ctx.translate(28, 34);
+  ctx.rotate(mode === 'drink' ? -0.9 + wave * 0.4 : -0.4 + wave);
+  ctx.strokeStyle = mode === 'doctor' ? '#ffffff' : '#fbd3b6';
+  ctx.lineWidth = 12; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(28, -14); ctx.stroke();
+  if (mode === 'drink') {
+    ctx.fillStyle = '#bae6fd'; ctx.fillRect(22, -32, 18, 24);
+    ctx.fillStyle = '#38bdf8'; ctx.fillRect(24, -20, 14, 10);
+  }
+  ctx.restore();
+  ctx.restore();
+}
+
 function drawKidney(cx, cy, sc = 1, pulse = 0) {
   ctx.save();
   ctx.translate(cx, cy);
@@ -166,9 +217,10 @@ function drawScene() {
   if (scIdx === 0) {
     // SCENE 1: HOOK (0 - 4.5s)
     const p = easeBack(seg(0, 0.7));
-    ctx.save(); ctx.translate(W / 2, 380); ctx.scale(p, p);
-    drawKidney(0, -40, 1.35, beat);
+    ctx.save(); ctx.translate(W / 2 - 90, 380); ctx.scale(p, p);
+    drawKidney(0, -40, 1.05, beat);
     ctx.restore();
+    drawPerson(W / 2 + 135, 390, 'pain', 1.45 * p);
 
     const p2 = easeOut(seg(0.4, 1.0));
     ctx.save(); ctx.globalAlpha = p2;
@@ -202,6 +254,7 @@ function drawScene() {
       rr(ix, iy + 310, iw, 190, 18, '#f0fdfa', '#99f6e4');
       txt('Pantau minum & catatan berkemih harian dengan mudah.', ix + iw / 2, iy + 405, 20, '#0f766e', 'center', '700', iw - 40);
     });
+    drawPerson(95, 1070, 'drink', 1.25);
   } else if (scIdx === 2) {
     // SCENE 3: CUSTOM PENGINGAT KENCING (10 - 16.5s)
     const p = easeOut(seg(10, 10.6));
@@ -268,6 +321,7 @@ function drawScene() {
       rr(ix + 16, iy + 342, iw - 48, 130, 16, '#fff', '#e2e8f0');
       txt('Bisa jadi tanda ISK/Sistitis. Perbanyak minum & periksa ke dokter.', ix + 30, iy + 407, 15, '#0f172a', 'left', '700', iw - 76);
     });
+    drawPerson(92, 1080, 'doctor', 1.25);
   } else {
     // SCENE 6: OUTRO CTA (27.5 - 32s)
     const p = easeBack(seg(27.5, 28.2));
